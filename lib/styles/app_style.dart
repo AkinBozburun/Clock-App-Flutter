@@ -9,6 +9,4 @@ class AppStyles
   static Color darkBackGroundColor = const  Color(0xff353839);
   Color darkBlueColor = const Color(0xff395B64);
   Color darkShadowColor = Colors.black38;
-
-
 }
