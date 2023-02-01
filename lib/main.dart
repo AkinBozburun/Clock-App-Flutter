@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget
     return MaterialApp
     (
       title: 'MyClock',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData
       (
         primarySwatch: Colors.blue,
