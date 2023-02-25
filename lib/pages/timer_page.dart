@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class TimerPage extends StatefulWidget
 {
@@ -17,7 +15,7 @@ class _TimerPageState extends State<TimerPage>
   {
     return const Scaffold
     (
-      body: Center(child: Text("timer"),),
+      body: Center(child: Text("timer")),
     );
   }
 }

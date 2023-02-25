@@ -55,6 +55,16 @@ class _TabState extends State<Tab>
       initialIndex: 0,
       child: Scaffold
       (
+        appBar: AppBar
+        (
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          toolbarHeight: 60,
+          actions:
+          [
+            IconButton(onPressed: (){}, icon: const Icon(Icons.add))
+          ],
+        ),
         body: const TabBarView
         (
           children:
@@ -65,7 +75,7 @@ class _TabState extends State<Tab>
             TimerPage(),
           ],
         ),
-        bottomNavigationBar: Container
+        bottomNavigationBar:Container
         (
           padding: const EdgeInsets.symmetric(horizontal: 10),
           margin: const EdgeInsets.only(bottom: 15),

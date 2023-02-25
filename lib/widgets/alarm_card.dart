@@ -41,23 +41,22 @@ Widget alarmCard(hours,minutes,context)
               color: AppStyles.lightBackGroundColor,
               fontSize: 50, fontWeight: FontWeight.bold,
             )),
-            Switch(value: switchValue, onChanged: (value) {},)
-            //CupertinoSwitch(activeColor: AppStyles().lightBlueColor,value: switchValue, onChanged: (value) {}),
+            CupertinoSwitch(activeColor: AppStyles().lightBlueColor,value: switchValue, onChanged: (value) {}),
           ],
         ),
         SizedBox
         (
-          height: 60,
-          width: MediaQuery.of(context).size.width*0.95,
+          height: 40,
           child: GridView.builder
           (
-            scrollDirection: Axis.vertical,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 7,
-            childAspectRatio: 2/3),
+            //physics: const NeverScrollableScrollPhysics(),
+            scrollDirection: Axis.horizontal,
+            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 40,
+            mainAxisSpacing: 15,mainAxisExtent: 40),
             itemCount: 7,
             itemBuilder: (context, index) => Column
             (
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children:
               [
                 Text(days[index],style: TextStyle(color: AppStyles.lightBackGroundColor)),
