@@ -11,8 +11,6 @@ class StopwatchPage extends StatefulWidget
 
 class _StopwatchPageState extends State<StopwatchPage>
 {
-  bool theme = true;
-
   TimeOfDay time = const TimeOfDay(hour: 10, minute: 30);
 
   @override
@@ -26,7 +24,7 @@ class _StopwatchPageState extends State<StopwatchPage>
       length: 2,
       child: Scaffold
       (
-        backgroundColor: theme ? AppStyles.lightBackGroundColor : AppStyles.darkBackGroundColor,
+        backgroundColor:  AppStyles.darkBackGroundColor,
         body: Center
         (
           child: Column
@@ -36,7 +34,7 @@ class _StopwatchPageState extends State<StopwatchPage>
             [
               Text("$hours:$minutes",style: TextStyle
               (
-                color: theme ? AppStyles.darkBackGroundColor : AppStyles.lightBackGroundColor,
+                color: AppStyles.lightBackGroundColor,
                 fontSize: 24, fontWeight: FontWeight.bold
               )),
               const SizedBox(height: 50),
@@ -56,13 +54,13 @@ class _StopwatchPageState extends State<StopwatchPage>
                   width: 150,
                   decoration: BoxDecoration
                   (
-                    color: theme ? AppStyles().lightRedColor : AppStyles().darkBlueColor,
+                    color: AppStyles().lightBlueColor,
                     borderRadius: BorderRadius.circular(20),
                     boxShadow:
                     [
                       BoxShadow
                       (
-                        color: theme ? AppStyles().lightShadowColor : AppStyles().darkShadowColor,
+                        color:AppStyles().darkShadowColor,
                         spreadRadius: 1,
                         blurRadius: 3,
                         offset: const Offset(2, 4), // changes position of shadow
@@ -71,7 +69,7 @@ class _StopwatchPageState extends State<StopwatchPage>
                   ),
                   child: Center(child: Text("Yeni Ekle",style: TextStyle
                   (
-                    color: theme ? AppStyles.lightBackGroundColor : AppStyles.darkBackGroundColor,
+                    color: AppStyles.darkBackGroundColor,
                     fontSize: 20,fontWeight: FontWeight.bold
                   ))),
                 ),

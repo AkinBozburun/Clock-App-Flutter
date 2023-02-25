@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 
 class AppStyles
 {
-  static Color lightBackGroundColor = const  Color(0xffFBFAF5);
-  Color lightRedColor = const Color(0xffFF6242);
+  static Color lightBackGroundColor = const  Color(0xffE4E4E4);
+  Color lightBlueColor = const Color(0xff85B6B1);
   Color lightShadowColor = Colors.black26;
 
-  static Color darkBackGroundColor = const  Color(0xff353839);
-  Color darkBlueColor = const Color(0xff4BF0FC);
+  static Color darkBackGroundColor = const  Color(0xff1D1D23);
   Color darkShadowColor = Colors.black38;
 
 }

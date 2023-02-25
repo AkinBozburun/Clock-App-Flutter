@@ -4,6 +4,7 @@ import 'package:my_clock_app/styles/app_style.dart';
 
 Widget alarmCard(hours,minutes,context)
 {
+  List days = ["P","S","Ç","P","C","C","P"];
   bool switchValue = true;
   return Container
   (
@@ -12,7 +13,7 @@ Widget alarmCard(hours,minutes,context)
     margin: const EdgeInsets.all(10),
     decoration: BoxDecoration
     (
-      color: AppStyles.lightBackGroundColor,
+      color: AppStyles.darkBackGroundColor,
       borderRadius: BorderRadius.circular(16),
       boxShadow:
       [
@@ -37,15 +38,16 @@ Widget alarmCard(hours,minutes,context)
           [
             Text("$hours:$minutes",style: TextStyle
             (
-              color: AppStyles.darkBackGroundColor,
-              fontSize: 50, fontWeight: FontWeight.bold
+              color: AppStyles.lightBackGroundColor,
+              fontSize: 50, fontWeight: FontWeight.bold,
             )),
-            CupertinoSwitch(activeColor: AppStyles().lightRedColor,value: switchValue, onChanged: (value) {}),
+            Switch(value: switchValue, onChanged: (value) {},)
+            //CupertinoSwitch(activeColor: AppStyles().lightBlueColor,value: switchValue, onChanged: (value) {}),
           ],
         ),
         SizedBox
         (
-          height: 100,
+          height: 60,
           width: MediaQuery.of(context).size.width*0.95,
           child: GridView.builder
           (
@@ -55,22 +57,22 @@ Widget alarmCard(hours,minutes,context)
             itemCount: 7,
             itemBuilder: (context, index) => Column
             (
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.center,
               children:
               [
-                const Text("Paz"),
+                Text(days[index],style: TextStyle(color: AppStyles.lightBackGroundColor)),
+                const SizedBox(height: 10),
                 Container
                 (
-                  height: 10,
-                  width: 10,
-                  decoration: const BoxDecoration(shape: BoxShape.circle,
-                  color: Colors.red)
+                  height: 6,
+                  decoration: BoxDecoration(shape: BoxShape.circle,
+                  color: AppStyles().lightBlueColor)
                 ),
               ],
             ),
           ),
         ),
-        const Text("HER GÜN"),
+        Text("HER GÜN",style: TextStyle(color: AppStyles.lightBackGroundColor)),
       ],
     ),
   );

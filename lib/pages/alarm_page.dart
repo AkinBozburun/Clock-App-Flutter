@@ -22,7 +22,7 @@ class _AlarmPageState extends State<AlarmPage>
 
     return Scaffold
     (
-      backgroundColor: AppStyles.lightBackGroundColor,
+      backgroundColor: AppStyles.darkBackGroundColor,
 
       body: ListView.builder
       (
