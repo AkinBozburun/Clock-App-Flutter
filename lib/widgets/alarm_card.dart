@@ -41,7 +41,8 @@ Widget alarmCard(hours,minutes,context)
               color: AppStyles.lightBackGroundColor,
               fontSize: 50, fontWeight: FontWeight.bold,
             )),
-            CupertinoSwitch(activeColor: AppStyles().lightBlueColor,value: switchValue, onChanged: (value) {}),
+            CupertinoSwitch(activeColor:
+            AppStyles().lightBlueColor,value: switchValue, onChanged: (value) {}),
           ],
         ),
         SizedBox
@@ -49,7 +50,6 @@ Widget alarmCard(hours,minutes,context)
           height: 40,
           child: GridView.builder
           (
-            //physics: const NeverScrollableScrollPhysics(),
             scrollDirection: Axis.horizontal,
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 40,
             mainAxisSpacing: 15,mainAxisExtent: 40),

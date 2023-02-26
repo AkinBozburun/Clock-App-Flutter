@@ -23,7 +23,14 @@ class _AlarmPageState extends State<AlarmPage>
     return Scaffold
     (
       backgroundColor: AppStyles.darkBackGroundColor,
-
+      appBar: AppBar
+      (
+        title: const Text("Alarmlarım"),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        toolbarHeight: 70,
+        actions:[IconButton(onPressed: (){}, icon: const Icon(Icons.add))],
+      ),
       body: ListView.builder
       (
         itemCount: 3,
