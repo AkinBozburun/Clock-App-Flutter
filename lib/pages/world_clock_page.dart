@@ -13,7 +13,6 @@ class WorldClockPage extends StatefulWidget
 
 class _WorldClockPageState extends State<WorldClockPage>
 {
-
   @override
   Widget build(BuildContext context)
   {
@@ -45,7 +44,6 @@ class _WorldClockPageState extends State<WorldClockPage>
             ),
           ],
         ),
-        //actions: [IconButton(onPressed: (){}, icon: const Icon(Icons.add))],
       ),
       body: CityList(),
     );

@@ -5,14 +5,20 @@ import 'package:my_clock_app/pages/stopwatch_page.dart';
 import 'package:my_clock_app/pages/timer_page.dart';
 import 'package:my_clock_app/pages/world_clock_page.dart';
 import 'package:my_clock_app/styles/app_style.dart';
+import 'package:my_clock_app/countdown.dart';
+
 void main()
 {
-  SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle(
+  SystemChrome.setSystemUIOverlayStyle
+  (
+    SystemUiOverlayStyle
+    (
+      statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.light,
-      systemNavigationBarColor: AppStyles.darkBackGroundColor
-    ));
-
+      systemNavigationBarColor: AppStyles.darkBackGroundColor,
+      systemNavigationBarIconBrightness: Brightness.light
+    )
+  );
   runApp(const MyApp());
 }
 
@@ -31,7 +37,7 @@ class MyApp extends StatelessWidget
       (
         scaffoldBackgroundColor: AppStyles.darkBackGroundColor
       ),
-      home: const Tab(),
+      home: const CountDownPage() //Tab(),
     );
   }
 }
@@ -52,7 +58,7 @@ class _TabState extends State<Tab>
     return DefaultTabController
     (
       length: 4,
-      initialIndex: 0,
+      initialIndex: 2,
       child: Scaffold
       (
         body: const TabBarView
@@ -65,32 +71,20 @@ class _TabState extends State<Tab>
             TimerPage(),
           ],
         ),
-        bottomNavigationBar:Container
+        bottomNavigationBar: TabBar
         (
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          margin: const EdgeInsets.only(bottom: 15),
-          decoration: BoxDecoration
-          (
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: TabBar
-          (
-            labelPadding: const EdgeInsets.all(10),
-            labelColor: AppStyles.darkBackGroundColor,
-            unselectedLabelColor: AppStyles.lightBackGroundColor,
-            indicator: BoxDecoration
-            (
-              borderRadius: BorderRadius.circular(20),
-              color: AppStyles().lightBlueColor,
-            ),
-            tabs:  const
-            [
-              Text('Alarm'),
-              Text('Dünya Saati'),
-              Text('Kronometre'),
-              Text('Zamanlayıcı'),
-            ],
-          ),
+          labelPadding: const EdgeInsets.all(10),
+          labelColor: AppStyles().lightBlueColor,
+          unselectedLabelColor: AppStyles.lightBackGroundColor,
+          splashBorderRadius: BorderRadius.circular(20),
+          indicatorColor: Colors.transparent,
+          tabs: const
+          [
+            Text('Alarm'),
+            Text('Dünya Saati'),
+            Text('Kronometre'),
+            Text('Zamanlayıcı'),
+          ],
         ),
       )
     );
