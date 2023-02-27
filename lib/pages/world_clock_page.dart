@@ -17,37 +17,37 @@ class _WorldClockPageState extends State<WorldClockPage>
   @override
   Widget build(BuildContext context)
   {
-    //final fullWidth = MediaQuery.of(context).size.width;
-    final fullHeight = MediaQuery.of(context).size.height;
-
-    return  Column
+    return Scaffold
     (
-      mainAxisAlignment: MainAxisAlignment.start,
-      children:
-      [
-        const SizedBox(height: 30),
-        Padding
+      appBar: AppBar
+      (
+        backgroundColor: AppStyles.darkBackGroundColor,elevation: 0,
+        toolbarHeight: 310,
+        title: Column
         (
-          padding: const EdgeInsets.all(10),
-          child: Image.asset("images/world_map.png",
-          color: AppStyles.lightBackGroundColor),
+          mainAxisAlignment: MainAxisAlignment.start,
+          children:
+          [
+            Padding
+            (
+              padding: const EdgeInsets.all(10),
+              child: Image.asset("images/world_map.png",
+              color: AppStyles.lightBackGroundColor),
+            ),
+            ListTile
+            (
+              title: ClockWidget
+              (
+                style: TextStyle(color: AppStyles.lightBackGroundColor,fontSize: 30),
+              ),
+              trailing: IconButton(onPressed: (){},
+              icon: Icon(Icons.add,color: AppStyles.lightBackGroundColor)),
+            ),
+          ],
         ),
-        AppBar
-        (
-          backgroundColor: Colors.transparent,elevation: 0,
-          title: ClockWidget(style: TextStyle
-          (
-            color: AppStyles.lightBackGroundColor,fontSize: 35
-          )),
-          centerTitle: true,
-          actions: [IconButton(onPressed: (){}, icon: const Icon(Icons.add))],
-        ),
-        SizedBox
-        (
-          height: fullHeight*0.4,
-          child: CityList(),
-        )
-      ],
+        //actions: [IconButton(onPressed: (){}, icon: const Icon(Icons.add))],
+      ),
+      body: CityList(),
     );
   }
 }
