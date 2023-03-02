@@ -10,17 +10,28 @@ class CountDownPage extends StatefulWidget
   State<CountDownPage> createState() => _CountDownPageState();
 }
 
-class _CountDownPageState extends State<CountDownPage>
+class _CountDownPageState extends State<CountDownPage> with SingleTickerProviderStateMixin
 {
+  late Animation anim;
+  late AnimationController animController;
 
-  static const maxSeconds = 10;
+  static const maxSeconds = 20;
   int seconds = maxSeconds;
   Timer? timer;
 
   bool isRunning = true;
 
+  @override
+  void initState()
+  {
+    super.initState();
+    animController = AnimationController(vsync: this,duration: const Duration(seconds: maxSeconds));
+    anim = Tween<double>(begin: 0,end: 1).animate(animController);
+  }
+
   void startTimer()
   {
+    animController.forward();
     isRunning = false;
     timer = Timer.periodic(const Duration(seconds: 1), (_)
     {
@@ -37,6 +48,7 @@ class _CountDownPageState extends State<CountDownPage>
 
   void pauseTimer()
   {
+    animController.stop();
     if(timer!.isActive == false)
     {
       startTimer();
@@ -52,6 +64,7 @@ class _CountDownPageState extends State<CountDownPage>
 
   void resetTimer()
   {
+    animController.reset();
     timer!.cancel();
     setState(()
     {
@@ -71,7 +84,11 @@ class _CountDownPageState extends State<CountDownPage>
       ElevatedButton(onPressed: ()=> resetTimer(), child: const Text("Bitir"))
     ])
     :
-    ElevatedButton(onPressed: ()=> startTimer(), child: const Text("Başlat"));
+    ElevatedButton(onPressed: ()
+    {
+      startTimer();
+    },
+    child: const Text("Başlat"));
   }
 
   Widget buildTimer() => SizedBox
@@ -86,18 +103,17 @@ class _CountDownPageState extends State<CountDownPage>
         Center
         (
           child: Text(seconds.toString(),
-          style: TextStyle(color: AppStyles.lightBackGroundColor),textScaleFactor: 5),
+          style: TextStyle(color: AppStyles.lightBackGroundColor,fontSize: 60)),
         ),
-        TweenAnimationBuilder<double>
+        AnimatedBuilder
         (
-          tween: Tween<double>(begin: 0.0, end: 1.0),
-          duration: const Duration(milliseconds: 2000),
-          builder: (context, value, _) => CircularProgressIndicator
+          animation: anim,
+          builder: (context, child) => CircularProgressIndicator
           (
             strokeWidth: 5,
             backgroundColor: Colors.black,
             valueColor: AlwaysStoppedAnimation(AppStyles().lightBlueColor),
-            value: value,
+            value: anim.value,
           ),
         ),
       ],
@@ -111,7 +127,8 @@ class _CountDownPageState extends State<CountDownPage>
     (
       body: Center
       (
-        child: Column
+        child:
+        Column
         (
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children:

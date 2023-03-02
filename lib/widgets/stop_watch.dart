@@ -18,7 +18,6 @@ class _StopWatchState extends State<StopWatch>
   {
     return StreamBuilder
     (
-      //stream: Stream.periodic(const Duration(seconds: 1)),
       builder:(context, snapshot)
       {
         return Text(time.toString(),style: TextStyle(color: AppStyles.lightBackGroundColor),textScaleFactor: 3,);

@@ -5,7 +5,6 @@ import 'package:my_clock_app/pages/stopwatch_page.dart';
 import 'package:my_clock_app/pages/timer_page.dart';
 import 'package:my_clock_app/pages/world_clock_page.dart';
 import 'package:my_clock_app/styles/app_style.dart';
-import 'package:my_clock_app/countdown.dart';
 
 void main()
 {
@@ -37,7 +36,7 @@ class MyApp extends StatelessWidget
       (
         scaffoldBackgroundColor: AppStyles.darkBackGroundColor
       ),
-      home: const CountDownPage() //Tab(),
+      home: const Tab(),
     );
   }
 }
@@ -63,6 +62,7 @@ class _TabState extends State<Tab>
       (
         body: const TabBarView
         (
+          physics: NeverScrollableScrollPhysics(),
           children:
           [
             AlarmPage(),
