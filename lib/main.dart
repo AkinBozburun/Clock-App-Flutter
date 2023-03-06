@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:my_clock_app/core/providers.dart';
 import 'package:my_clock_app/pages/alarm_page.dart';
 import 'package:my_clock_app/pages/stopwatch_page.dart';
 import 'package:my_clock_app/pages/timer_page.dart';
 import 'package:my_clock_app/pages/world_clock_page.dart';
 import 'package:my_clock_app/styles/app_style.dart';
+import 'package:provider/provider.dart';
 
 void main()
 {
@@ -28,15 +30,22 @@ class MyApp extends StatelessWidget
   @override
   Widget build(BuildContext context)
   {
-    return MaterialApp
+    return MultiProvider
     (
-      title: 'MyClock',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData
+      providers:
+      [
+        ChangeNotifierProvider(create: (context) => TimerProvider()),
+      ],
+      child: MaterialApp
       (
-        scaffoldBackgroundColor: AppStyles.darkBackGroundColor
+        title: 'MyClock',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData
+        (
+          scaffoldBackgroundColor: AppStyles.darkBackGroundColor
+        ),
+        home: const Tab(),
       ),
-      home: const Tab(),
     );
   }
 }
@@ -57,7 +66,7 @@ class _TabState extends State<Tab>
     return DefaultTabController
     (
       length: 4,
-      initialIndex: 2,
+      initialIndex: 3,
       child: Scaffold
       (
         body: const TabBarView

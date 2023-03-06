@@ -1,7 +1,8 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:my_clock_app/core/providers.dart';
 import 'package:my_clock_app/widgets/time_picker.dart';
 import 'package:my_clock_app/widgets/timer_indicator.dart';
+import 'package:provider/provider.dart';
 
 class TimerPage extends StatefulWidget
 {
@@ -11,85 +12,48 @@ class TimerPage extends StatefulWidget
   State<TimerPage> createState() => _TimerPageState();
 }
 
-class _TimerPageState extends State<TimerPage> with SingleTickerProviderStateMixin
+class _TimerPageState extends State<TimerPage> with TickerProviderStateMixin
 {
   late Animation anim;
   late AnimationController animController;
 
-  static const maxSeconds = 20;
-  int seconds = maxSeconds;
-  Timer? timer;
-
-  bool isRunning = true;
-
-  @override
-  void initState()
+  _initAnim()
   {
-    super.initState();
-    animController = AnimationController(vsync: this,duration: const Duration(seconds: maxSeconds));
+    final prov = Provider.of<TimerProvider>(context,listen: false);
+
+    animController = AnimationController(vsync: this,duration: prov.animDuration());
     anim = Tween<double>(begin: 0,end: 1).animate(animController);
-  }
-
-  void startTimer()
-  {
-    animController.forward();
-    isRunning = false;
-    timer = Timer.periodic(const Duration(seconds: 1), (_)
-    {
-      if(seconds > 0)
-      {
-        setState(() => seconds--);
-      }
-      else
-      {
-        resetTimer();
-      }
-    });
-  }
-
-  void pauseTimer()
-  {
-    animController.stop();
-    if(timer!.isActive == false)
-    {
-      startTimer();
-    }
-    else
-    {
-      setState(()
-      {
-        timer!.cancel();
-      });
-    }
-  }
-
-  void resetTimer()
-  {
-    animController.reset();
-    timer!.cancel();
-    setState(()
-    {
-      isRunning = true;
-      seconds = maxSeconds;
-    });
   }
 
   Widget _timerButton()
   {
-    return !isRunning ?
+    final prov = Provider.of<TimerProvider>(context);
+
+    return !prov.isRunning ?
     Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
     children:
     [
-      ElevatedButton(onPressed: ()=> pauseTimer(),
-      child: Text(timer!.isActive ?  "Duraklat" :  "Devam et")),
-      ElevatedButton(onPressed: ()=> resetTimer(), child: const Text("Bitir"))
+      ElevatedButton(onPressed: ()=> prov.pauseTimer(animController),
+      child: Text(prov.timer!.isActive ?  "Duraklat" :  "Devam et")),
+      ElevatedButton(onPressed: ()=> prov.resetTimer(animController),
+      child: const Text("Bitir"))
     ])
     :
     ElevatedButton(onPressed: ()
     {
-      startTimer();
+      _initAnim();
+      prov.startTimer(animController);
     },
     child: const Text("Başlat"));
+  }
+
+  _overlayCheck()
+  {
+    final prov = Provider.of<TimerProvider>(context);
+    return !prov.isRunning ?
+    TimerIndicator(anim: anim, animController: animController,
+    height: 350,width: 350) :
+    const TimePickerScrollList();
   }
 
   @override
@@ -104,9 +68,7 @@ class _TimerPageState extends State<TimerPage> with SingleTickerProviderStateMix
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children:
           [
-            const TimePickerScrollList(),
-            //TimerIndicator(anim: anim, animController: animController,
-            //height: 400,width: 400),
+            _overlayCheck(),
             _timerButton(),
           ],
         ),

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:my_clock_app/core/providers.dart';
 import 'package:my_clock_app/styles/app_style.dart';
+import 'package:my_clock_app/widgets/seconds_to_time_converter.dart';
+import 'package:provider/provider.dart';
 
 class TimePickerScrollList extends StatefulWidget
 {
@@ -19,12 +22,13 @@ class _TimePickerScrollListState extends State<TimePickerScrollList>
 
   _timeFormatting()
   {
+    final prov = Provider.of<TimerProvider>(context,listen: false);
 
     int h = _hourController.selectedItem*3600;
     int m = _minuteController.selectedItem*60;
     int s = _secondController.selectedItem;
-    int initialSeconds = h+m+s;
-    print(initialSeconds);
+    int timeToSeconds = h+m+s;
+    prov.convertTimeToSeconds(timeToSeconds);
   }
 
   Widget seconds(int i)
@@ -33,7 +37,7 @@ class _TimePickerScrollListState extends State<TimePickerScrollList>
     return Center
     (
       child: Text(i<10 ? "0${seconds+i}" : "${seconds+i}",
-      style:  TextStyle(fontSize: 50,color: AppStyles.lightBackGroundColor,
+      style: TextStyle(fontSize: 50,color: AppStyles.lightBackGroundColor,
       fontWeight: FontWeight.w500)),
     );
   }
@@ -58,7 +62,7 @@ class _TimePickerScrollListState extends State<TimePickerScrollList>
     );
   }
 
-  Widget seperator() => SizedBox(width: 40,child: Text(":", textAlign: TextAlign.center,
+  Widget timeSeperator() => SizedBox(width: 40,child: Text(":", textAlign: TextAlign.center,
   style: TextStyle(fontSize: 50,color: AppStyles.lightBackGroundColor)));
 
   @override
@@ -92,7 +96,7 @@ class _TimePickerScrollListState extends State<TimePickerScrollList>
               ),
             ),
           ),
-          seperator(),
+          timeSeperator(),
           SizedBox //Minutes picker.
           (
             width: 70,
@@ -101,10 +105,7 @@ class _TimePickerScrollListState extends State<TimePickerScrollList>
               controller: _minuteController,
               itemExtent: 90,
               diameterRatio: 1.6,
-              onSelectedItemChanged: (value)
-              {
-                _timeFormatting();
-              },
+              onSelectedItemChanged: (value) => _timeFormatting(),
               physics: const FixedExtentScrollPhysics(),
               childDelegate: ListWheelChildBuilderDelegate
               (
@@ -116,7 +117,7 @@ class _TimePickerScrollListState extends State<TimePickerScrollList>
               ),
             ),
           ),
-          seperator(),
+          timeSeperator(),
           SizedBox //Seconds picker
           (
             width: 70,
@@ -128,9 +129,7 @@ class _TimePickerScrollListState extends State<TimePickerScrollList>
               physics: const FixedExtentScrollPhysics(),
               onSelectedItemChanged: (value)
               {
-                int h = _minuteController.selectedItem*60;
-                int s = _secondController.selectedItem;
-                print(h+s);
+                _timeFormatting();
               },
               childDelegate: ListWheelChildBuilderDelegate
               (

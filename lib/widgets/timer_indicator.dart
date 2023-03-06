@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
+import "package:my_clock_app/core/providers.dart";
 import "package:my_clock_app/styles/app_style.dart";
-import "package:my_clock_app/widgets/time_picker.dart";
+import "package:provider/provider.dart";
 
 class TimerIndicator extends StatelessWidget
 {
@@ -22,13 +23,16 @@ class TimerIndicator extends StatelessWidget
         fit: StackFit.expand,
         children:
         [
-          const TimePickerScrollList(),
+          Consumer<TimerProvider>(builder: (context, value, child) =>
+          Center(child: Text(value.formatDuration(),
+          style: TextStyle(fontSize: 50,color: AppStyles.lightBackGroundColor,
+          fontWeight: FontWeight.w500)))),
           AnimatedBuilder
           (
             animation: anim,
             builder: (context, child) => CircularProgressIndicator
             (
-              strokeWidth: 5,
+              strokeWidth: 8,
               backgroundColor: Colors.black,
               valueColor: AlwaysStoppedAnimation(AppStyles().lightBlueColor),
               value: anim.value,
