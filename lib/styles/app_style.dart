@@ -9,4 +9,6 @@ class AppStyles
   static Color darkBackGroundColor = const  Color(0xff1D1D23);
   Color darkShadowColor = Colors.black38;
 
+  TextStyle txtStyle = TextStyle(color: lightBackGroundColor,fontSize: 20);
+
 }

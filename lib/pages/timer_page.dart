@@ -29,31 +29,43 @@ class _TimerPageState extends State<TimerPage> with TickerProviderStateMixin
   {
     final prov = Provider.of<TimerProvider>(context);
 
-    return !prov.isRunning ?
-    Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-    children:
-    [
-      ElevatedButton(onPressed: ()=> prov.pauseTimer(animController),
-      child: Text(prov.timer!.isActive ?  "Duraklat" :  "Devam et")),
-      ElevatedButton(onPressed: ()=> prov.resetTimer(animController),
-      child: const Text("Bitir"))
-    ])
-    :
-    ElevatedButton(onPressed: ()
-    {
-      _initAnim();
-      prov.startTimer(animController);
-    },
-    child: const Text("Başlat"));
+    return AnimatedSwitcher
+    (
+      duration: const Duration(milliseconds: 200),
+      child:
+      Row
+      (
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: !prov.isRunning ?
+        [
+          ElevatedButton(onPressed: ()=> prov.pauseTimer(animController),
+          child: Text(prov.timer!.isActive ?  "Duraklat" :  "Devam et")),
+          ElevatedButton(onPressed: ()=> prov.resetTimer(animController),
+          child: const Text("Bitir"))
+        ] :
+        [
+          ElevatedButton(onPressed: ()
+          {
+            _initAnim();
+            prov.startTimer(animController);
+          },
+          child: const Text("Başlat")),
+        ],
+      ),
+    );
   }
 
   _overlayCheck()
   {
     final prov = Provider.of<TimerProvider>(context);
-    return !prov.isRunning ?
-    TimerIndicator(anim: anim, animController: animController,
-    height: 350,width: 350) :
-    const TimePickerScrollList();
+    return AnimatedSwitcher
+    (
+      duration: const Duration(milliseconds: 200),
+      child: !prov.isRunning ?
+      TimerIndicator(anim: anim, animController: animController,
+      height: 350,width: 350) :
+      const TimePickerScrollList()
+    );
   }
 
   @override

@@ -15,7 +15,7 @@ class TimerProvider extends ChangeNotifier
 
   animDuration()
   {
-    return Duration(seconds: initialSeconds);
+    return Duration(milliseconds: initialSeconds*1000+500);
   }
 
   startTimer(animController)

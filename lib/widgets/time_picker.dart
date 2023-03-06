@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_clock_app/core/providers.dart';
 import 'package:my_clock_app/styles/app_style.dart';
-import 'package:my_clock_app/widgets/seconds_to_time_converter.dart';
 import 'package:provider/provider.dart';
 
 class TimePickerScrollList extends StatefulWidget
@@ -17,8 +16,6 @@ class _TimePickerScrollListState extends State<TimePickerScrollList>
   final FixedExtentScrollController _hourController = FixedExtentScrollController();
   final FixedExtentScrollController _minuteController = FixedExtentScrollController();
   final FixedExtentScrollController _secondController = FixedExtentScrollController();
-
-  int initialSeconds = 0;
 
   _timeFormatting()
   {
@@ -62,87 +59,112 @@ class _TimePickerScrollListState extends State<TimePickerScrollList>
     );
   }
 
-  Widget timeSeperator() => SizedBox(width: 40,child: Text(":", textAlign: TextAlign.center,
+  Widget _timeSeperator() => SizedBox(width: 40,child: Text(":", textAlign: TextAlign.center,
   style: TextStyle(fontSize: 50,color: AppStyles.lightBackGroundColor)));
+
+  Widget timeTxt(String txt) => SizedBox
+  (
+    width: 100,
+    child: Center(child: Text(txt,style: AppStyles().txtStyle)),
+  );
 
   @override
   Widget build(BuildContext context)
   {
-    return SizedBox
+    return Column
     (
-      height: 250,
-      child: Row
-      (
-        mainAxisAlignment: MainAxisAlignment.center,
-        children:
-        [
-          SizedBox //Hours picker.
+      children:
+      [
+        Row
+        (
+          mainAxisAlignment: MainAxisAlignment.center,
+          children:
+          [
+            timeTxt("Saat"),
+            const SizedBox(width: 20),
+            timeTxt("Dakika"),
+            const SizedBox(width: 20),
+            timeTxt("Saniye"),
+          ],
+        ),
+        const SizedBox(height: 30),
+        SizedBox
+        (
+          height: 240,
+          child: Row
           (
-            width: 70,
-            child: ListWheelScrollView.useDelegate
-            (
-              controller: _hourController,
-              itemExtent: 90,
-              diameterRatio: 1.6,
-              onSelectedItemChanged: (value) => _timeFormatting(),
-              physics: const FixedExtentScrollPhysics(),
-              childDelegate: ListWheelChildBuilderDelegate
+            mainAxisAlignment: MainAxisAlignment.center,
+            children:
+            [
+              SizedBox //Hours picker.
               (
-                childCount: 25,
-                builder: (context, index)
-                {
-                  return hours(index);
-                }
+                width: 80,
+                child: ListWheelScrollView.useDelegate
+                (
+                  controller: _hourController,
+                  itemExtent: 100,
+                  diameterRatio: 10,
+                  onSelectedItemChanged: (value) => _timeFormatting(),
+                  physics: const FixedExtentScrollPhysics(),
+                  childDelegate: ListWheelChildBuilderDelegate
+                  (
+                    childCount: 25,
+                    builder: (context, index)
+                    {
+                      return hours(index);
+                    }
+                  ),
+                ),
               ),
-            ),
-          ),
-          timeSeperator(),
-          SizedBox //Minutes picker.
-          (
-            width: 70,
-            child: ListWheelScrollView.useDelegate
-            (
-              controller: _minuteController,
-              itemExtent: 90,
-              diameterRatio: 1.6,
-              onSelectedItemChanged: (value) => _timeFormatting(),
-              physics: const FixedExtentScrollPhysics(),
-              childDelegate: ListWheelChildBuilderDelegate
+              _timeSeperator(),
+              SizedBox //Minutes picker.
               (
-                childCount: 60,
-                builder: (context, index)
-                {
-                  return minutes(index);
-                }
+                width: 80,
+                child: ListWheelScrollView.useDelegate
+                (
+                  controller: _minuteController,
+                  itemExtent: 100,
+                  diameterRatio: 10,
+                  onSelectedItemChanged: (value) => _timeFormatting(),
+                  physics: const FixedExtentScrollPhysics(),
+                  childDelegate: ListWheelChildBuilderDelegate
+                  (
+                    childCount: 60,
+                    builder: (context, index)
+                    {
+                      return minutes(index);
+                    }
+                  ),
+                ),
               ),
-            ),
-          ),
-          timeSeperator(),
-          SizedBox //Seconds picker
-          (
-            width: 70,
-            child: ListWheelScrollView.useDelegate
-            (
-              controller: _secondController,
-              itemExtent: 90,
-              diameterRatio: 1.6,
-              physics: const FixedExtentScrollPhysics(),
-              onSelectedItemChanged: (value)
-              {
-                _timeFormatting();
-              },
-              childDelegate: ListWheelChildBuilderDelegate
+              _timeSeperator(),
+              SizedBox //Seconds picker
               (
-                childCount: 60,
-                builder: (context, index)
-                {
-                  return seconds(index);
-                }
+                width: 80,
+                child: ListWheelScrollView.useDelegate
+                (
+                  controller: _secondController,
+                  itemExtent: 100,
+                  diameterRatio: 10,
+                  physics: const FixedExtentScrollPhysics(),
+                  onSelectedItemChanged: (value)
+                  {
+                    _timeFormatting();
+                  },
+                  childDelegate: ListWheelChildBuilderDelegate
+                  (
+                    childCount: 60,
+                    builder: (context, index)
+                    {
+                      return seconds(index);
+                    }
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
