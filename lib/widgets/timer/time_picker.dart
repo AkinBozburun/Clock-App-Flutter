@@ -73,6 +73,7 @@ class _TimePickerScrollListState extends State<TimePickerScrollList>
   {
     return Column
     (
+      mainAxisAlignment: MainAxisAlignment.center,
       children:
       [
         Row

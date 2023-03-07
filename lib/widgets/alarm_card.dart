@@ -42,7 +42,7 @@ Widget alarmCard(hours,minutes,context)
               fontSize: 50, fontWeight: FontWeight.bold,
             )),
             CupertinoSwitch(activeColor:
-            AppStyles().lightBlueColor,value: switchValue, onChanged: (value) {}),
+            AppStyles.lightBlueColor,value: switchValue, onChanged: (value) {}),
           ],
         ),
         SizedBox
@@ -65,7 +65,7 @@ Widget alarmCard(hours,minutes,context)
                 (
                   height: 6,
                   decoration: BoxDecoration(shape: BoxShape.circle,
-                  color: AppStyles().lightBlueColor)
+                  color: AppStyles.lightBlueColor)
                 ),
               ],
             ),

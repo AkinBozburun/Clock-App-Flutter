@@ -112,7 +112,7 @@ class _CountDownPageState extends State<CountDownPage> with SingleTickerProvider
           (
             strokeWidth: 5,
             backgroundColor: Colors.black,
-            valueColor: AlwaysStoppedAnimation(AppStyles().lightBlueColor),
+            valueColor: AlwaysStoppedAnimation(AppStyles.lightBlueColor),
             value: anim.value,
           ),
         ),

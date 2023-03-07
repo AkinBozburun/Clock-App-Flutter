@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:my_clock_app/core/providers.dart';
-import 'package:my_clock_app/widgets/time_picker.dart';
-import 'package:my_clock_app/widgets/timer_indicator.dart';
+import 'package:my_clock_app/styles/app_style.dart';
+import 'package:my_clock_app/widgets/button.dart';
+import 'package:my_clock_app/widgets/timer/time_picker.dart';
+import 'package:my_clock_app/widgets/timer/timer_indicator.dart';
 import 'package:provider/provider.dart';
 
 class TimerPage extends StatefulWidget
@@ -38,18 +40,21 @@ class _TimerPageState extends State<TimerPage> with TickerProviderStateMixin
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: !prov.isRunning ?
         [
-          ElevatedButton(onPressed: ()=> prov.pauseTimer(animController),
-          child: Text(prov.timer!.isActive ?  "Duraklat" :  "Devam et")),
-          ElevatedButton(onPressed: ()=> prov.resetTimer(animController),
-          child: const Text("Bitir"))
+          button(()=> prov.pauseTimer(animController),
+            prov.timer!.isActive ? Colors.red : AppStyles.lightBackGroundColor,
+            prov.timer!.isActive ?  "Duraklat" :  "Devam et"),
+
+          button(()=> prov.resetTimer(animController),
+            AppStyles.lightBlueColor,
+            "Bitir"),
         ] :
         [
-          ElevatedButton(onPressed: ()
+          button(()
           {
             _initAnim();
             prov.startTimer(animController);
           },
-          child: const Text("Başlat")),
+          AppStyles.lightBlueColor, "Başlat")
         ],
       ),
     );
@@ -75,15 +80,14 @@ class _TimerPageState extends State<TimerPage> with TickerProviderStateMixin
     (
       body: Center
       (
-        child: Column
-        (
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children:
-          [
-            _overlayCheck(),
-            _timerButton(),
-          ],
-        ),
+        child: _overlayCheck(),
+      ),
+      bottomNavigationBar: BottomAppBar
+      (
+        color: Colors.transparent,
+        elevation: 0,
+        height: 180,
+        child: _timerButton(),
       ),
     );
   }

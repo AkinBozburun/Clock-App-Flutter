@@ -83,7 +83,7 @@ class _TabState extends State<Tab>
         bottomNavigationBar: TabBar
         (
           labelPadding: const EdgeInsets.all(10),
-          labelColor: AppStyles().lightBlueColor,
+          labelColor: AppStyles.lightBlueColor,
           unselectedLabelColor: AppStyles.lightBackGroundColor,
           splashBorderRadius: BorderRadius.circular(20),
           indicatorColor: Colors.transparent,
