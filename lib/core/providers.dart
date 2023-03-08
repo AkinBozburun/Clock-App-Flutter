@@ -59,7 +59,6 @@ class TimerProvider extends ChangeNotifier
     isRunning = true;
     initialSeconds = 0;
     notifyListeners();
-    print(isRunning);
   }
 
   String formatDuration()

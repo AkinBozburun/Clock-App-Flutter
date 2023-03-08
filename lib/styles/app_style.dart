@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppStyles
 {
@@ -9,7 +10,9 @@ class AppStyles
   static Color darkBackGroundColor = const  Color(0xff1D1D23);
   Color darkShadowColor = Colors.black38;
 
-  TextStyle txtStyle = TextStyle(color: lightBackGroundColor,fontSize: 20,fontWeight: FontWeight.w500);
-  TextStyle buttonTxt = TextStyle(color: darkBackGroundColor,fontSize: 18,fontWeight: FontWeight.w600);
+  TextStyle tabTxtStyle = TextStyle(color: lightBackGroundColor,fontSize: 12.sp,fontWeight: FontWeight.w500);
+  TextStyle timeTxtStyle = TextStyle(color: lightBackGroundColor,fontSize: 16.sp,fontWeight: FontWeight.w500);
+  TextStyle numberStyle = TextStyle(color: lightBackGroundColor,fontSize: 30.sp,fontWeight: FontWeight.w500);
+  TextStyle buttonTxt = TextStyle(color: darkBackGroundColor,fontSize: 18.sp,fontWeight: FontWeight.w600);
 
 }

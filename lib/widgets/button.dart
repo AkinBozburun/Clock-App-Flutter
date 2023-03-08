@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_clock_app/styles/app_style.dart';
 
-Widget button(void Function() press, Color color, String txt)
+Widget button(context,void Function() press, Color color, String txt)
 {
   final radius = BorderRadius.circular(25);
 
@@ -11,8 +12,8 @@ Widget button(void Function() press, Color color, String txt)
     borderRadius: radius,
     child: Ink
     (
-      height: 50,
-      width: 180,
+      height: 40.h,
+      width: 140.w,
       decoration: BoxDecoration
       (
         color: color,

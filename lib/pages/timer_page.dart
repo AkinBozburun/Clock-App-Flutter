@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_clock_app/core/providers.dart';
 import 'package:my_clock_app/styles/app_style.dart';
 import 'package:my_clock_app/widgets/button.dart';
@@ -40,16 +41,16 @@ class _TimerPageState extends State<TimerPage> with TickerProviderStateMixin
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: !prov.isRunning ?
         [
-          button(()=> prov.pauseTimer(animController),
+          button(context,()=> prov.pauseTimer(animController),
             prov.timer!.isActive ? Colors.red : AppStyles.lightBackGroundColor,
             prov.timer!.isActive ?  "Duraklat" :  "Devam et"),
 
-          button(()=> prov.resetTimer(animController),
+          button(context,()=> prov.resetTimer(animController),
             AppStyles.lightBlueColor,
             "Bitir"),
         ] :
         [
-          button(()
+          button(context,()
           {
             _initAnim();
             prov.startTimer(animController);
@@ -68,7 +69,7 @@ class _TimerPageState extends State<TimerPage> with TickerProviderStateMixin
       duration: const Duration(milliseconds: 200),
       child: !prov.isRunning ?
       TimerIndicator(anim: anim, animController: animController,
-      height: 350,width: 350) :
+      height: 0.8.sw, width: 0.8.sw) :
       const TimePickerScrollList()
     );
   }
@@ -86,7 +87,7 @@ class _TimerPageState extends State<TimerPage> with TickerProviderStateMixin
       (
         color: Colors.transparent,
         elevation: 0,
-        height: 180,
+        height: 150.h,
         child: _timerButton(),
       ),
     );

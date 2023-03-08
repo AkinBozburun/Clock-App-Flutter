@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_clock_app/core/providers.dart';
 import 'package:my_clock_app/pages/alarm_page.dart';
 import 'package:my_clock_app/pages/stopwatch_page.dart';
@@ -36,15 +37,21 @@ class MyApp extends StatelessWidget
       [
         ChangeNotifierProvider(create: (context) => TimerProvider()),
       ],
-      child: MaterialApp
+      child: ScreenUtilInit
       (
-        title: 'MyClock',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData
+        designSize: const Size(360, 640),
+        minTextAdapt: true,
+        splitScreenMode: true,
+        builder: (context, child) =>  MaterialApp
         (
-          scaffoldBackgroundColor: AppStyles.darkBackGroundColor
+          title: 'MyClock',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData
+          (
+            scaffoldBackgroundColor: AppStyles.darkBackGroundColor
+          ),
+          home: const Tab(),
         ),
-        home: const Tab(),
       ),
     );
   }
@@ -60,6 +67,8 @@ class Tab extends StatefulWidget
 
 class _TabState extends State<Tab>
 {
+  Widget tabTxt(txt) => Text(txt,);
+
   @override
   Widget build(BuildContext context)
   {
@@ -84,15 +93,16 @@ class _TabState extends State<Tab>
         (
           labelPadding: const EdgeInsets.all(10),
           labelColor: AppStyles.lightBlueColor,
+          labelStyle: AppStyles().tabTxtStyle,
           unselectedLabelColor: AppStyles.lightBackGroundColor,
           splashBorderRadius: BorderRadius.circular(20),
           indicatorColor: Colors.transparent,
-          tabs: const
+          tabs:
           [
-            Text('Alarm'),
-            Text('Dünya Saati'),
-            Text('Kronometre'),
-            Text('Zamanlayıcı'),
+            tabTxt("Alarm"),
+            tabTxt('Dünya Saati'),
+            tabTxt('Kronometre'),
+            tabTxt('Zamanlayıcı'),
           ],
         ),
       )

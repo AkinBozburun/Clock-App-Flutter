@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_clock_app/core/providers.dart';
 import 'package:my_clock_app/styles/app_style.dart';
 import 'package:provider/provider.dart';
@@ -34,8 +35,7 @@ class _TimePickerScrollListState extends State<TimePickerScrollList>
     return Center
     (
       child: Text(i<10 ? "0${seconds+i}" : "${seconds+i}",
-      style: TextStyle(fontSize: 50,color: AppStyles.lightBackGroundColor,
-      fontWeight: FontWeight.w500)),
+      style: AppStyles().numberStyle),
     );
   }
   Widget minutes(int i)
@@ -44,8 +44,7 @@ class _TimePickerScrollListState extends State<TimePickerScrollList>
     return Center
     (
       child: Text(i<10 ? "0${minutes+i}" : "${minutes+i}",
-      style:  TextStyle(fontSize: 50,color: AppStyles.lightBackGroundColor,
-      fontWeight: FontWeight.w500)),
+      style: AppStyles().numberStyle),
     );
   }
   Widget hours(int i)
@@ -54,118 +53,109 @@ class _TimePickerScrollListState extends State<TimePickerScrollList>
     return Center
     (
       child: Text(i<10 ? "0${hours+i}" : "${hours+i}",
-      style:  TextStyle(fontSize: 50,color: AppStyles.lightBackGroundColor,
-      fontWeight: FontWeight.w500)),
+      style: AppStyles().numberStyle),
     );
   }
 
-  Widget _timeSeperator() => SizedBox(width: 40,child: Text(":", textAlign: TextAlign.center,
-  style: TextStyle(fontSize: 50,color: AppStyles.lightBackGroundColor)));
+  Widget _timeSeperator() => Text(":", textAlign: TextAlign.center,
+    style: AppStyles().numberStyle);
 
-  Widget timeTxt(String txt) => SizedBox
+  Widget timeBox(txt, widget)=> Column
   (
-    width: 100,
-    child: Center(child: Text(txt,style: AppStyles().txtStyle)),
+    mainAxisAlignment: MainAxisAlignment.center,
+    children:
+    [
+      Text(txt,style: AppStyles().timeTxtStyle),
+      const SizedBox(height: 20),
+      SizedBox
+      (
+        width: 80.w,
+        height: 150,
+        child: widget,
+       ),
+      const SizedBox(height: 35),
+    ],
   );
+
+  double itemExtent = 60;
 
   @override
   Widget build(BuildContext context)
   {
-    return Column
+    return Padding
     (
-      mainAxisAlignment: MainAxisAlignment.center,
-      children:
-      [
-        Row
-        (
-          mainAxisAlignment: MainAxisAlignment.center,
-          children:
-          [
-            timeTxt("Saat"),
-            const SizedBox(width: 20),
-            timeTxt("Dakika"),
-            const SizedBox(width: 20),
-            timeTxt("Saniye"),
-          ],
-        ),
-        const SizedBox(height: 30),
-        SizedBox
-        (
-          height: 240,
-          child: Row
+      padding: EdgeInsets.symmetric(horizontal: 50.sp),
+      child: Row
+      (
+        mainAxisAlignment: MainAxisAlignment.center,
+        children:
+        [
+          timeBox
           (
-            mainAxisAlignment: MainAxisAlignment.center,
-            children:
-            [
-              SizedBox //Hours picker.
+            "Saat",
+            ListWheelScrollView.useDelegate
               (
-                width: 80,
-                child: ListWheelScrollView.useDelegate
+                controller: _hourController,
+                itemExtent: itemExtent,
+                diameterRatio: 10,
+                onSelectedItemChanged: (value) => _timeFormatting(),
+                physics: const FixedExtentScrollPhysics(),
+                childDelegate: ListWheelChildBuilderDelegate
                 (
-                  controller: _hourController,
-                  itemExtent: 100,
-                  diameterRatio: 10,
-                  onSelectedItemChanged: (value) => _timeFormatting(),
-                  physics: const FixedExtentScrollPhysics(),
-                  childDelegate: ListWheelChildBuilderDelegate
-                  (
-                    childCount: 25,
-                    builder: (context, index)
-                    {
-                      return hours(index);
-                    }
-                  ),
-                ),
-              ),
-              _timeSeperator(),
-              SizedBox //Minutes picker.
-              (
-                width: 80,
-                child: ListWheelScrollView.useDelegate
-                (
-                  controller: _minuteController,
-                  itemExtent: 100,
-                  diameterRatio: 10,
-                  onSelectedItemChanged: (value) => _timeFormatting(),
-                  physics: const FixedExtentScrollPhysics(),
-                  childDelegate: ListWheelChildBuilderDelegate
-                  (
-                    childCount: 60,
-                    builder: (context, index)
-                    {
-                      return minutes(index);
-                    }
-                  ),
-                ),
-              ),
-              _timeSeperator(),
-              SizedBox //Seconds picker
-              (
-                width: 80,
-                child: ListWheelScrollView.useDelegate
-                (
-                  controller: _secondController,
-                  itemExtent: 100,
-                  diameterRatio: 10,
-                  physics: const FixedExtentScrollPhysics(),
-                  onSelectedItemChanged: (value)
+                  childCount: 25,
+                  builder: (context, index)
                   {
-                    _timeFormatting();
-                  },
-                  childDelegate: ListWheelChildBuilderDelegate
-                  (
-                    childCount: 60,
-                    builder: (context, index)
-                    {
-                      return seconds(index);
-                    }
-                  ),
+                    return hours(index);
+                  }
                 ),
               ),
-            ],
           ),
-        ),
-      ],
+          _timeSeperator(),
+          timeBox
+          (
+            "Dakika",
+            ListWheelScrollView.useDelegate
+            (
+              controller: _minuteController,
+              itemExtent: itemExtent,
+              diameterRatio: 10,
+              onSelectedItemChanged: (value) => _timeFormatting(),
+              physics: const FixedExtentScrollPhysics(),
+              childDelegate: ListWheelChildBuilderDelegate
+              (
+                childCount: 60,
+                builder: (context, index)
+                {
+                  return minutes(index);
+                }
+              ),
+            )),
+          _timeSeperator(),
+          timeBox
+          (
+            "Saniye",
+            ListWheelScrollView.useDelegate
+            (
+              controller: _secondController,
+              itemExtent: itemExtent,
+              diameterRatio: 10,
+              physics: const FixedExtentScrollPhysics(),
+              onSelectedItemChanged: (value)
+              {
+                _timeFormatting();
+              },
+              childDelegate: ListWheelChildBuilderDelegate
+              (
+                childCount: 60,
+                builder: (context, index)
+                {
+                  return seconds(index);
+                }
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }
