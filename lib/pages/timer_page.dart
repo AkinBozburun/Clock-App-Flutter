@@ -41,16 +41,16 @@ class _TimerPageState extends State<TimerPage> with TickerProviderStateMixin
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: !prov.isRunning ?
         [
-          button(context,()=> prov.pauseTimer(animController),
+          button(()=> prov.pauseTimer(animController),
             prov.timer!.isActive ? Colors.red : AppStyles.lightBackGroundColor,
             prov.timer!.isActive ?  "Duraklat" :  "Devam et"),
 
-          button(context,()=> prov.resetTimer(animController),
+          button(()=> prov.resetTimer(animController),
             AppStyles.lightBlueColor,
             "Bitir"),
         ] :
         [
-          button(context,()
+          button(()
           {
             _initAnim();
             prov.startTimer(animController);

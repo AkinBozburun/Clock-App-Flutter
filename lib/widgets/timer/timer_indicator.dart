@@ -24,7 +24,7 @@ class TimerIndicator extends StatelessWidget
         children:
         [
           Consumer<TimerProvider>(builder: (context, value, child) =>
-          Center(child: Text(value.formatDuration(),
+          Center(child: Text(value.timerDurationString(),
           style: TextStyle(fontSize: 50,color: AppStyles.lightBackGroundColor,
           fontWeight: FontWeight.w500)))),
           AnimatedBuilder

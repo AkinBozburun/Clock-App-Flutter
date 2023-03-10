@@ -36,6 +36,7 @@ class MyApp extends StatelessWidget
       providers:
       [
         ChangeNotifierProvider(create: (context) => TimerProvider()),
+        ChangeNotifierProvider(create: (context) => StopWatchProvider()),
       ],
       child: ScreenUtilInit
       (

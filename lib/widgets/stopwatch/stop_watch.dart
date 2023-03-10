@@ -1,29 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:my_clock_app/core/providers.dart';
 import 'package:my_clock_app/styles/app_style.dart';
+import 'package:provider/provider.dart';
 
-class StopWatch extends StatefulWidget
+class StopWatchWidget extends StatefulWidget
 {
-  const StopWatch({super.key});
+  const StopWatchWidget({super.key});
 
   @override
-  State<StopWatch> createState() => _StopWatchState();
+  State<StopWatchWidget> createState() => _StopWatchWidgetState();
 }
 
-class _StopWatchState extends State<StopWatch>
+class _StopWatchWidgetState extends State<StopWatchWidget>
 {
-  int time = 0;
 
   @override
   Widget build(BuildContext context)
   {
-    return StreamBuilder
+    return Consumer<StopWatchProvider>
     (
-      stream: Stream.periodic(const Duration(milliseconds: 50)),
-      builder:(context, snapshot)
-      {
-        time++;
-        return Text(time.toString(),style: TextStyle(color: AppStyles.lightBackGroundColor),textScaleFactor: 3,);
-      }
+      builder: (context, value, child) =>
+      Text(value.stopWatchString(),
+      style: AppStyles().numberStyle),
     );
   }
 }

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:my_clock_app/core/providers.dart';
+import 'package:my_clock_app/styles/app_style.dart';
+import 'package:my_clock_app/widgets/button.dart';
 import 'package:my_clock_app/widgets/stopwatch/stop_watch.dart';
+import 'package:provider/provider.dart';
 
 class StopwatchPage extends StatefulWidget
 {
@@ -11,7 +15,32 @@ class StopwatchPage extends StatefulWidget
 
 class _StopwatchPageState extends State<StopwatchPage>
 {
-  //TimeOfDay time = const TimeOfDay(hour: 10, minute: 30);
+  stopWatchOverlay()
+  {
+    final prov = Provider.of<StopWatchProvider>(context);
+    return Row
+    (
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: !prov.isRunning ?
+      [
+        button
+        (
+          () =>prov.startStopWatch(),
+          AppStyles.lightBlueColor,
+          "Başlat",
+        )
+      ] :
+      [
+        button
+        (
+          () =>prov.stopStopWatch(),
+          Colors.red,
+          "Durdur",
+        ),
+        button(() {}, AppStyles.lightBackGroundColor, "Tur")
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context)
@@ -20,7 +49,15 @@ class _StopwatchPageState extends State<StopwatchPage>
     (
       body: Center
       (
-        child: StopWatch(),
+        child: Column
+        (
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children:
+          [
+            const StopWatchWidget(),
+            stopWatchOverlay(),
+          ],
+        ),
       ),
     );
   }

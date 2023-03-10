@@ -61,7 +61,7 @@ class TimerProvider extends ChangeNotifier
     notifyListeners();
   }
 
-  String formatDuration()
+  String timerDurationString()
   {
     final duration = animDuration();
     String hours = duration.inHours.toString().padLeft(0, '2');
@@ -69,5 +69,53 @@ class TimerProvider extends ChangeNotifier
     String seconds = duration.inSeconds.remainder(60).toString().padLeft(2, '0');
     return "$hours:$minutes:$seconds";
   }
+}
 
+class StopWatchProvider extends ChangeNotifier
+{
+  int minutes = 0;
+  int seconds = 0;
+  int miliSeconds = 0;
+
+  bool isRunning = false;
+  Timer? timer;
+
+  String stopWatchString()
+  {
+    String min = minutes.toString().padLeft(2,"0");
+    String sec = seconds.toString().padLeft(2,"0");
+    String mili = miliSeconds.toString().padLeft(2,"0");
+    return "$min.$sec.$mili";
+  }
+
+  startStopWatch()
+  {
+    isRunning = true;
+    notifyListeners();
+    timer = Timer.periodic(const Duration(milliseconds: 10), (_)
+    {
+      miliSeconds++;
+      if(miliSeconds>99)
+      {
+        seconds++;
+        miliSeconds = 0;
+      }
+      if(seconds > 59)
+      {
+        minutes++;
+        seconds = 0;
+      }
+      notifyListeners();
+    });
+  }
+
+  stopStopWatch()
+  {
+    minutes = 0;
+    seconds = 0;
+    miliSeconds = 0;
+    timer!.cancel();
+    isRunning = false;
+    notifyListeners();
+  }
 }
