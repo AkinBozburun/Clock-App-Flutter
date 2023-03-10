@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_clock_app/styles/app_style.dart';
-import 'package:my_clock_app/widgets/alarm_card.dart';
+import 'package:my_clock_app/widgets/alarm/alarm_card.dart';
 
 class AlarmPage extends StatefulWidget
 {

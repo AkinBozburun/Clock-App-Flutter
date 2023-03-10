@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_clock_app/widgets/stopwatch/stop_watch.dart';
 
 class StopwatchPage extends StatefulWidget
 {
@@ -15,6 +16,12 @@ class _StopwatchPageState extends State<StopwatchPage>
   @override
   Widget build(BuildContext context)
   {
-    return Scaffold();
+    return Scaffold
+    (
+      body: Center
+      (
+        child: StopWatch(),
+      ),
+    );
   }
 }

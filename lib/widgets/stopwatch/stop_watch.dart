@@ -11,15 +11,17 @@ class StopWatch extends StatefulWidget
 
 class _StopWatchState extends State<StopWatch>
 {
-  int time = 60;
+  int time = 0;
 
   @override
   Widget build(BuildContext context)
   {
     return StreamBuilder
     (
+      stream: Stream.periodic(const Duration(milliseconds: 50)),
       builder:(context, snapshot)
       {
+        time++;
         return Text(time.toString(),style: TextStyle(color: AppStyles.lightBackGroundColor),textScaleFactor: 3,);
       }
     );

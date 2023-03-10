@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_clock_app/styles/app_style.dart';
-import 'package:my_clock_app/widgets/city_list.dart';
-import 'package:my_clock_app/widgets/clock_stream.dart';
+import 'package:my_clock_app/widgets/world%20clock/city_list.dart';
+import 'package:my_clock_app/widgets/world%20clock/clock_stream.dart';
 
 class WorldClockPage extends StatefulWidget
 {
