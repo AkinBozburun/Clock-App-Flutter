@@ -12,7 +12,7 @@ class AppStyles
 
   TextStyle tabTxtStyle = TextStyle(color: lightBackGroundColor,fontSize: 12.sp,fontWeight: FontWeight.w500);
   TextStyle timeTxtStyle = TextStyle(color: lightBackGroundColor,fontSize: 16.sp,fontWeight: FontWeight.w500);
-  TextStyle numberStyle = TextStyle(color: lightBackGroundColor,fontSize: 32.sp,fontWeight: FontWeight.w500);
+  TextStyle numberStyle = TextStyle(color: lightBackGroundColor,fontSize: 36.sp,fontWeight: FontWeight.w500);
   TextStyle buttonTxt = TextStyle(color: darkBackGroundColor,fontSize: 18.sp,fontWeight: FontWeight.w600);
 
 }

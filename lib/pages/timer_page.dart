@@ -28,6 +28,7 @@ class _TimerPageState extends State<TimerPage> with TickerProviderStateMixin
     anim = Tween<double>(begin: 0,end: 1).animate(animController);
   }
 
+
   Widget _timerButton()
   {
     final prov = Provider.of<TimerProvider>(context);

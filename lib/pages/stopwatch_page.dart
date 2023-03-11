@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_clock_app/core/providers.dart';
 import 'package:my_clock_app/styles/app_style.dart';
 import 'package:my_clock_app/widgets/button.dart';
+import 'package:my_clock_app/widgets/stopwatch/lap_times.dart';
 import 'package:my_clock_app/widgets/stopwatch/stop_watch.dart';
 import 'package:provider/provider.dart';
 
@@ -15,30 +17,33 @@ class StopwatchPage extends StatefulWidget
 
 class _StopwatchPageState extends State<StopwatchPage>
 {
-  stopWatchOverlay()
+  _stopWatchOverlay()
   {
     final prov = Provider.of<StopWatchProvider>(context);
     return Row
     (
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: !prov.isRunning ?
+      children: prov.isRunning ?
       [
         button
         (
-          () =>prov.startStopWatch(),
-          AppStyles.lightBlueColor,
-          "Başlat",
-        )
+          () => prov.timer!.isActive ? prov.stopStopWatch() : prov.startStopWatch(),
+         prov.timer!.isActive ? Colors.red : AppStyles.lightBlueColor,
+         prov.timer!.isActive ? "Durdur" : "Devam Et",
+        ),
+        button(()=> prov.timer!.isActive? prov.addLaps() : prov.clearLapTimes(),
+          prov.isRunning ? AppStyles.lightBackGroundColor : Colors.white12,
+          prov.timer!.isActive? "Tur" : "Sıfırla",
+        ),
       ] :
       [
         button
         (
-          () =>prov.stopStopWatch(),
-          Colors.red,
-          "Durdur",
+          () => prov.timer!.isActive ? prov.stopStopWatch() : prov.startStopWatch(),
+         prov.timer!.isActive ? Colors.red : AppStyles.lightBlueColor,
+         prov.timer!.isActive ? "Durdur" : "Başlat",
         ),
-        button(() {}, AppStyles.lightBackGroundColor, "Tur")
-      ],
+      ]
     );
   }
 
@@ -51,13 +56,21 @@ class _StopwatchPageState extends State<StopwatchPage>
       (
         child: Column
         (
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.center,
           children:
           [
             const StopWatchWidget(),
-            stopWatchOverlay(),
+            const SizedBox(height: 50),
+            SizedBox(height: 200.h, width: 180, child: const LapTimes()),
           ],
         ),
+      ),
+      bottomNavigationBar: BottomAppBar
+      (
+        color: Colors.transparent,
+        elevation: 0,
+        height: 150.h,
+        child: _stopWatchOverlay(),
       ),
     );
   }

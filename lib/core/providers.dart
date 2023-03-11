@@ -111,11 +111,34 @@ class StopWatchProvider extends ChangeNotifier
 
   stopStopWatch()
   {
+    timer!.cancel();
+  }
+
+  _resetStopWatch()
+  {
     minutes = 0;
     seconds = 0;
     miliSeconds = 0;
     timer!.cancel();
     isRunning = false;
+    notifyListeners();
+  }
+
+ List<Map<String,dynamic>> lapTimesList = [];
+ int lapCount = 0;
+
+  addLaps()
+  {
+    lapCount++;
+    final lap = {"index" : lapCount,"lap": stopWatchString()};
+    lapTimesList.add(lap);
+  }
+
+  clearLapTimes()
+  {
+    lapTimesList = [];
+    lapCount = 0;
+    _resetStopWatch();
     notifyListeners();
   }
 }
