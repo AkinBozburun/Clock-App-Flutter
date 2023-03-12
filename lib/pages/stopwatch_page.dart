@@ -17,35 +17,36 @@ class StopwatchPage extends StatefulWidget
 
 class _StopwatchPageState extends State<StopwatchPage>
 {
-  _stopWatchOverlay()
-  {
-    final prov = Provider.of<StopWatchProvider>(context);
-    return Row
+  Widget _stopWatchButtons() => Consumer<StopWatchProvider>
+  (
+    builder: (context, value, child) => Row
     (
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: prov.isRunning ?
+      children: value.isRunning ?
       [
-        button
-        (
-          () => prov.timer!.isActive ? prov.stopStopWatch() : prov.startStopWatch(),
-         prov.timer!.isActive ? Colors.red : AppStyles.lightBlueColor,
-         prov.timer!.isActive ? "Durdur" : "Devam Et",
+        button(() => value.timer!.isActive ? value.stopStopWatch() : value.startStopWatch(),
+         value.timer!.isActive ? Colors.red : AppStyles.lightBlueColor,
+         value.timer!.isActive ? "Durdur" : "Devam Et",
         ),
-        button(()=> prov.timer!.isActive? prov.addLaps() : prov.clearLapTimes(),
-          prov.isRunning ? AppStyles.lightBackGroundColor : Colors.white12,
-          prov.timer!.isActive? "Tur" : "Sıfırla",
+        button(()=> value.timer!.isActive? value.addLaps() : value.clearLapTimes(),
+          value.isRunning ? AppStyles.lightBackGroundColor : Colors.white12,
+          value.timer!.isActive? "Tur" : "Sıfırla",
         ),
       ] :
       [
-        button
-        (
-          () => prov.timer!.isActive ? prov.stopStopWatch() : prov.startStopWatch(),
-         prov.timer!.isActive ? Colors.red : AppStyles.lightBlueColor,
-         prov.timer!.isActive ? "Durdur" : "Başlat",
-        ),
+        button(() =>  value.startStopWatch(), AppStyles.lightBlueColor, "Başlat"),
       ]
-    );
-  }
+    ),
+  );
+
+  Widget lapsListWidget() => Consumer<StopWatchProvider>
+  (
+    builder:(context, value, child) => Visibility
+    (
+      visible: value.lapTimesList.isEmpty ? false : true,
+      child: const LapTimes()
+    ),
+  );
 
   @override
   Widget build(BuildContext context)
@@ -56,12 +57,11 @@ class _StopwatchPageState extends State<StopwatchPage>
       (
         child: Column
         (
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children:
           [
             const StopWatchWidget(),
-            const SizedBox(height: 50),
-            SizedBox(height: 200.h, width: 180, child: const LapTimes()),
+            lapsListWidget(),
           ],
         ),
       ),
@@ -69,8 +69,8 @@ class _StopwatchPageState extends State<StopwatchPage>
       (
         color: Colors.transparent,
         elevation: 0,
-        height: 150.h,
-        child: _stopWatchOverlay(),
+        height: 100.h,
+        child: Align(alignment: Alignment.topCenter,child: _stopWatchButtons()),
       ),
     );
   }

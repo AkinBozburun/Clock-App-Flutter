@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_clock_app/core/providers.dart';
 import 'package:my_clock_app/styles/app_style.dart';
 import 'package:provider/provider.dart';
@@ -13,24 +14,58 @@ class LapTimes extends StatefulWidget
 
 class _LapTimesState extends State<LapTimes>
 {
-
-  _lapTimesListView()
-  {
-    final prov = Provider.of<StopWatchProvider>(context);
-    return ListView.builder
+  _lapTimesListView() => Consumer<StopWatchProvider>
+  (
+    builder:(context, value, child) => SizedBox
     (
-      itemCount: prov.lapTimesList.length,
-      itemBuilder: (context, index) => ListTile
+      height: 200.h,
+      width: 180.w,
+      child: ListView.builder
       (
-        title: Text(prov.lapTimesList[index]["lap"],style: AppStyles().timeTxtStyle),
-        leading: Text(prov.lapTimesList[index]["index"].toString(),style: AppStyles().timeTxtStyle),
+        itemCount: value.lapTimesList.length,
+        itemBuilder: (context, index) => SizedBox(height: 60,
+        child: Row
+        (
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children:
+          [
+            Text("${value.lapTimesList[index]["index"]}.",style: AppStyles().timeTxtStyle),
+            Text(value.lapTimesList[index]["lap"],style: AppStyles().timeTxtStyle),
+          ],
+        )),
       ),
-    );
-  }
+    ),
+  );
 
   @override
   Widget build(BuildContext context)
   {
-    return _lapTimesListView();
+    return Padding
+    (
+      padding: const EdgeInsets.symmetric(horizontal: 80),
+      child: Column
+      (
+        children:
+        [
+          SizedBox(width: 195.w,
+            child: Row
+            (
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children:
+              [
+                Text("Tur",style: AppStyles().timeTxtStyle),
+                Text("Tur Süresi",style: AppStyles().timeTxtStyle),
+              ],
+            ),
+          ),
+          Padding
+          (
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Container(height: 1,color: AppStyles.lightBackGroundColor),
+          ),
+          _lapTimesListView(),
+        ],
+      ),
+    );
   }
 }
