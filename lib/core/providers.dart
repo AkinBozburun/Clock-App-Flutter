@@ -22,9 +22,8 @@ class TimerProvider extends ChangeNotifier
     return Duration(milliseconds: initialSeconds*1000+500);
   }
 
-  startTimer(animController)
+  startTimer()
   {
-    animController.forward();
     isRunning = false;
     notifyListeners();
     timer = Timer.periodic(const Duration(seconds: 1),(_)
@@ -36,17 +35,16 @@ class TimerProvider extends ChangeNotifier
       }
       else
       {
-        resetTimer(animController);
+        resetTimer();
       }
     });
   }
 
-  pauseTimer(animController)
+  pauseTimer()
   {
-    animController.stop();
     if(timer!.isActive == false)
     {
-      startTimer(animController);
+      startTimer();
     }
     else
     {
@@ -55,9 +53,8 @@ class TimerProvider extends ChangeNotifier
     }
   }
 
-  resetTimer(animController)
+  resetTimer()
   {
-    animController.reset();
     timer!.cancel();
 
     isRunning = true;

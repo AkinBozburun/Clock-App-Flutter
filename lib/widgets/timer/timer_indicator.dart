@@ -5,11 +5,8 @@ import "package:provider/provider.dart";
 
 class TimerIndicator extends StatelessWidget
 {
-  final Animation anim;
-  final AnimationController animController;
   final double height, width;
-  const TimerIndicator({super.key, required this.anim, required this.animController,
-  required this.height, required this.width});
+  const TimerIndicator({super.key, required this.height, required this.width});
 
   @override
   Widget build(BuildContext context) => SizedBox

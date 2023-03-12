@@ -94,21 +94,21 @@ class _TimePickerScrollListState extends State<TimePickerScrollList>
           (
             "Saat",
             ListWheelScrollView.useDelegate
+            (
+              controller: _hourController,
+              itemExtent: itemExtent,
+              diameterRatio: 10,
+              onSelectedItemChanged: (value) => _timeFormatting(),
+              physics: const FixedExtentScrollPhysics(),
+              childDelegate: ListWheelChildBuilderDelegate
               (
-                controller: _hourController,
-                itemExtent: itemExtent,
-                diameterRatio: 10,
-                onSelectedItemChanged: (value) => _timeFormatting(),
-                physics: const FixedExtentScrollPhysics(),
-                childDelegate: ListWheelChildBuilderDelegate
-                (
-                  childCount: 25,
-                  builder: (context, index)
-                  {
-                    return hours(index);
-                  }
-                ),
+                childCount: 25,
+                builder: (context, index)
+                {
+                  return hours(index);
+                }
               ),
+            ),
           ),
           _timeSeperator(),
           timeBox

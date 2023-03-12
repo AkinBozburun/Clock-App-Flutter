@@ -17,49 +17,31 @@ class TimerPage extends StatefulWidget
 
 class _TimerPageState extends State<TimerPage> with TickerProviderStateMixin
 {
-  late Animation anim;
-  late AnimationController animController;
-
-  _initAnim()
-  {
-    final prov = Provider.of<TimerProvider>(context,listen: false);
-
-    animController = AnimationController(vsync: this,duration: prov.animDuration());
-    anim = Tween<double>(begin: 0,end: 1).animate(animController);
-  }
-
-  Widget _timerButton()
-  {
-    final prov = Provider.of<TimerProvider>(context);
-
-    return AnimatedSwitcher
+  Widget _timerButton() => Consumer<TimerProvider>
+  (
+    builder:(context, value, child) => AnimatedSwitcher
     (
       duration: const Duration(milliseconds: 200),
       child:
       Row
       (
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: !prov.isRunning ?
+        children: !value.isRunning ?
         [
-          button(()=> prov.pauseTimer(animController),
-            prov.timer!.isActive ? Colors.red : AppStyles.lightBackGroundColor,
-            prov.timer!.isActive ?  "Duraklat" :  "Devam et"),
-
-          button(()=> prov.resetTimer(animController),
+          button(()=> value.pauseTimer(),
+            value.timer!.isActive ? Colors.red : AppStyles.lightBackGroundColor,
+            value.timer!.isActive ?  "Duraklat" :  "Devam et"),
+          button(()=> value.resetTimer(),
             AppStyles.lightBlueColor,
             "Bitir"),
         ] :
         [
-          button(()
-          {
-            _initAnim();
-            prov.startTimer(animController);
-          },
-          AppStyles.lightBlueColor, "Başlat")
+          button(() => value.startTimer(),
+           AppStyles.lightBlueColor, "Başlat")
         ],
       ),
-    );
-  }
+    ),
+  );
 
   _overlayCheck()
   {
@@ -68,8 +50,7 @@ class _TimerPageState extends State<TimerPage> with TickerProviderStateMixin
     (
       duration: const Duration(milliseconds: 200),
       child: !prov.isRunning ?
-      TimerIndicator(anim: anim, animController: animController,
-      height: 0.8.sw, width: 0.8.sw) :
+      TimerIndicator(height: 0.8.sw, width: 0.8.sw) :
       const TimePickerScrollList()
     );
   }
