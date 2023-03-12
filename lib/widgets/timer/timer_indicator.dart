@@ -12,33 +12,25 @@ class TimerIndicator extends StatelessWidget
   required this.height, required this.width});
 
   @override
-  Widget build(BuildContext context)
-  {
-    return SizedBox
+  Widget build(BuildContext context) => SizedBox
+  (
+    height: height,
+    width: width,
+    child: Consumer<TimerProvider>(builder: (context, value, child) => Stack
     (
-      height: height,
-      width: width,
-      child: Stack
-      (
-        fit: StackFit.expand,
-        children:
-        [
-          Consumer<TimerProvider>(builder: (context, value, child) =>
-          Center(child: Text(value.timerDurationString(),
-          style: AppStyles().numberStyle))),
-          AnimatedBuilder
-          (
-            animation: anim,
-            builder: (context, child) => CircularProgressIndicator
-            (
-              strokeWidth: 8,
-              backgroundColor: Colors.black,
-              valueColor: AlwaysStoppedAnimation(AppStyles.lightBlueColor),
-              value: anim.value,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+      fit: StackFit.expand,
+      children:
+      [
+        Center(child: Text(value.timerDurationString(),
+        style: AppStyles().numberStyle)),
+        CircularProgressIndicator
+        (
+          strokeWidth: 6,
+          backgroundColor: Colors.black,
+          valueColor: AlwaysStoppedAnimation(AppStyles.lightBlueColor),
+          value: value.initialSeconds / value.secondsFromPicker,
+        ),
+      ],
+    )),
+  );
 }

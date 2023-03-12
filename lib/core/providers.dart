@@ -4,9 +4,13 @@ import 'package:flutter/material.dart';
 class TimerProvider extends ChangeNotifier
 {
   int initialSeconds = 0;
+
+  int secondsFromPicker = 0;
+
   convertTimeToSeconds(sec)
   {
     initialSeconds = sec;
+    secondsFromPicker = initialSeconds;
     notifyListeners();
   }
 
