@@ -19,7 +19,7 @@ class TimerProvider extends ChangeNotifier
 
   animDuration()
   {
-    return Duration(milliseconds: initialSeconds*1000+500);
+    return Duration(milliseconds: initialSeconds*1000);
   }
 
   startTimer()

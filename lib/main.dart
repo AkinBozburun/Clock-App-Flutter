@@ -6,6 +6,7 @@ import 'package:my_clock_app/pages/alarm_page.dart';
 import 'package:my_clock_app/pages/stopwatch_page.dart';
 import 'package:my_clock_app/pages/timer_page.dart';
 import 'package:my_clock_app/pages/world_clock_page.dart';
+import 'package:my_clock_app/screen_size.dart';
 import 'package:my_clock_app/styles/app_style.dart';
 import 'package:provider/provider.dart';
 

@@ -1,42 +1,53 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:my_clock_app/styles/app_style.dart';
+import 'package:my_clock_app/widgets/world clock/country_list.dart';
 
 class CityList extends StatelessWidget
 {
-  CityList({super.key});
+  const CityList({super.key});
 
-  final List cities = ["Italy" ,"Japan","Turkey","Germany","Norway","Egypt"];
-  final List hours = ["19:00" ,"05:00","20:00","18:00","16:00","20:05"];
+  _timeGap(countryTime)
+  {
+    String time = "19";// DateFormat('HH').format(DateTime.now());
+    String today = DateFormat('dd').format(DateTime.now()).toString();
+    countryTime["hour"] = countryTime["hour"].substring(0,2);
+    int gap = (int.parse(time) - int.parse(countryTime["hour"]));
+    return gap < 0 ? "$gap saat geri" : "$gap saat ileri";
+  }
 
   @override
   Widget build(BuildContext context)
   {
-      return ListView.builder
+    return ListView.builder
+    (
+      itemCount: countryList.length,
+      itemBuilder: (context, index) => Padding
       (
-        itemCount: cities.length,
-        itemBuilder: (context, index) => Padding
+        padding: const EdgeInsets.all(10),
+        child: InkWell
         (
-          padding: const EdgeInsets.all(10),
-          child: InkWell
+          borderRadius: BorderRadius.circular(30),
+          onTap: () {},
+          child: Ink
           (
-            borderRadius: BorderRadius.circular(30),
-            onTap: () {},
-            child: Ink
+            decoration: BoxDecoration
             (
-              decoration: BoxDecoration
-              (
-                color: Colors.white12,
-                borderRadius: BorderRadius.circular(30),
-              ),
-              padding: const EdgeInsets.all(10),
-              child: ListTile
-              (
-                title: Text(cities[index],style: TextStyle(color: AppStyles.lightBackGroundColor,fontSize: 20)),
-                trailing: Text(hours[index],style: TextStyle(color: AppStyles.lightBackGroundColor,fontSize: 20)),
-              ),
+              color: Colors.white12,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            padding: const EdgeInsets.all(10),
+            child: ListTile
+            (
+              title: Text(countryList[index]["timezone"]!,style: TextStyle(color: AppStyles.lightBackGroundColor,fontSize: 20)),
+              subtitle: Text(_timeGap(countryList[index]).toString(),
+               style: TextStyle(color: AppStyles.lightBackGroundColor,fontSize: 14)),
+              trailing: Text("${countryList[index]["hour"]!}:${countryList[index]["minute"]!}",
+              style: TextStyle(color: AppStyles.lightBackGroundColor,fontSize: 20)),
             ),
           ),
         ),
-      );
+      ),
+    );
   }
 }
