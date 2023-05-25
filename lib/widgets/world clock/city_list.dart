@@ -1,25 +1,56 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:my_clock_app/core/providers.dart';
 import 'package:my_clock_app/styles/app_style.dart';
-import 'package:my_clock_app/widgets/world clock/country_list.dart';
+import 'package:provider/provider.dart';
 
-class CityList extends StatelessWidget
+class CityList extends StatefulWidget
 {
   const CityList({super.key});
 
+  @override
+  State<CityList> createState() => _CityListState();
+}
+
+class _CityListState extends State<CityList>
+{
   _timeGap(countryTime)
   {
-    String time = "19";// DateFormat('HH').format(DateTime.now());
-    String today = DateFormat('dd').format(DateTime.now()).toString();
-    countryTime["hour"] = countryTime["hour"].substring(0,2);
-    int gap = (int.parse(time) - int.parse(countryTime["hour"]));
-    return gap < 0 ? "$gap saat geri" : "$gap saat ileri";
+    DateTime now = DateTime.now();
+    DateTime country = DateTime.parse(countryTime["datetime"]);
+    int nowSeconds= now.millisecondsSinceEpoch;
+    int countrySeconds= country.millisecondsSinceEpoch;
+    double hourGap = (nowSeconds-countrySeconds)/3600000;
+
+    int today = int.parse(DateFormat("dd").format(DateTime.now()));
+    int countryDay = int.parse(countryTime["day"]);
+
+    String day = "";
+    if(countryDay > today)
+    {
+      day = "ileri, yarın";
+    }
+    else
+    {
+      day = "geri, dün";
+    }
+    if(countryDay == today && countrySeconds > nowSeconds)
+    {
+      day = "ileri";
+    }
+    if(countryDay == today && countrySeconds < nowSeconds)
+    {
+      day = "geri";
+    }
+    return "${hourGap.round().abs()} saat $day";
   }
 
-  @override
-  Widget build(BuildContext context)
+  _list()
   {
-    return ListView.builder
+    List countryList = Provider.of<WorldClockProvider>(context).countries;
+
+    return countryList.isEmpty ? const Center(child: CircularProgressIndicator()) :
+    ListView.builder
     (
       itemCount: countryList.length,
       itemBuilder: (context, index) => Padding
@@ -39,9 +70,9 @@ class CityList extends StatelessWidget
             padding: const EdgeInsets.all(10),
             child: ListTile
             (
-              title: Text(countryList[index]["timezone"]!,style: TextStyle(color: AppStyles.lightBackGroundColor,fontSize: 20)),
+              title: Text(countryList[index]["timezone"],style: TextStyle(color: AppStyles.lightBackGroundColor,fontSize: 20)),
               subtitle: Text(_timeGap(countryList[index]).toString(),
-               style: TextStyle(color: AppStyles.lightBackGroundColor,fontSize: 14)),
+              style: TextStyle(color: AppStyles.lightBackGroundColor,fontSize: 14)),
               trailing: Text("${countryList[index]["hour"]!}:${countryList[index]["minute"]!}",
               style: TextStyle(color: AppStyles.lightBackGroundColor,fontSize: 20)),
             ),
@@ -50,4 +81,14 @@ class CityList extends StatelessWidget
       ),
     );
   }
+
+  @override
+  void initState()
+  {
+    Provider.of<WorldClockProvider>(context,listen: false).fetchCountries();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) => _list();
 }

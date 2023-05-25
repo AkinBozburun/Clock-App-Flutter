@@ -45,7 +45,7 @@ class _WorldClockPageState extends State<WorldClockPage>
           ],
         ),
       ),
-      body: CityList(),
+      body: const CityList(),
     );
   }
 }

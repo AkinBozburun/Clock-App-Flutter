@@ -33,7 +33,9 @@ dependencies:
   android_alarm_manager_plus: ^2.1.0
   intl: ^0.18.0
   provider: ^6.0.5
+  http:
   flutter_screenutil: ^5.6.1
+
 
 
   # The following adds the Cupertino Icons font to your application.

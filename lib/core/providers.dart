@@ -1,5 +1,38 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+class WorldClockProvider extends ChangeNotifier
+{
+  List countries = [];
+
+  String authKey = "M48RZ8Qc+fsU3eHxKx5MVA==mx1ELdox8rXqqYhX";
+
+  String clockApi = "https://api.api-ninjas.com/v1/worldtime?city=Tokyo";
+
+  fetchCountries() async
+  {
+   if(countries.isEmpty)
+   {
+      await http.get
+      (
+        Uri.parse(clockApi),
+        headers: {'X-Api-Key': authKey}
+      ).then((value)
+      {
+        Map result = jsonDecode(value.body);
+        _listItems(result);
+      });
+   }
+  }
+  _listItems(result)
+  {
+    countries.add(result);
+    notifyListeners();
+    print("fetched!");
+  }
+}
 
 class TimerProvider extends ChangeNotifier
 {
