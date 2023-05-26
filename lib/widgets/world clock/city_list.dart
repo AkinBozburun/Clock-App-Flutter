@@ -22,44 +22,59 @@ class _CityListState extends State<CityList>
     int countrySeconds= country.millisecondsSinceEpoch;
     double hourGap = (nowSeconds-countrySeconds)/3600000;
 
+    double millis = nowSeconds - (hourGap.round()*3600000);
+    var dt = DateTime.fromMillisecondsSinceEpoch(millis.toInt());
+    var d24 = DateFormat("HH:mm").format(dt);
+    print(d24);
+    hours = d24;
+
     int today = int.parse(DateFormat("dd").format(DateTime.now()));
     int countryDay = int.parse(countryTime["day"]);
-
     String day = "";
-    if(countryDay > today)
+
+    if(hourGap.round() == 0)
     {
-      day = "ileri, yarın";
+      return "Aynı saat";
     }
     else
     {
-      day = "geri, dün";
-    }
-    if(countryDay == today && countrySeconds > nowSeconds)
-    {
-      day = "ileri";
-    }
-    if(countryDay == today && countrySeconds < nowSeconds)
-    {
-      day = "geri";
+      if(countryDay > today)
+      {
+        day = "ileri, yarın";
+      }
+      else
+      {
+        day = "geri, dün";
+      }
+      if(countryDay == today && countrySeconds > nowSeconds)
+      {
+        day = "ileri";
+      }
+      if(countryDay == today && countrySeconds < nowSeconds)
+      {
+        day = "geri";
+      }
     }
     return "${hourGap.round().abs()} saat $day";
   }
 
+  late String hours;
+
   _list()
   {
-    List countryList = Provider.of<WorldClockProvider>(context).countries;
+    final provider = Provider.of<WorldClockProvider>(context);
 
-    return countryList.isEmpty ? const Center(child: CircularProgressIndicator()) :
+    return provider.countries.isEmpty ? const Center(child: CircularProgressIndicator()) :
     ListView.builder
     (
-      itemCount: countryList.length,
+      itemCount: provider.countries.length,
       itemBuilder: (context, index) => Padding
       (
         padding: const EdgeInsets.all(10),
         child: InkWell
         (
           borderRadius: BorderRadius.circular(30),
-          onTap: () {},
+          onLongPress: () => provider.deleteItem(index),
           child: Ink
           (
             decoration: BoxDecoration
@@ -70,11 +85,12 @@ class _CityListState extends State<CityList>
             padding: const EdgeInsets.all(10),
             child: ListTile
             (
-              title: Text(countryList[index]["timezone"],style: TextStyle(color: AppStyles.lightBackGroundColor,fontSize: 20)),
-              subtitle: Text(_timeGap(countryList[index]).toString(),
-              style: TextStyle(color: AppStyles.lightBackGroundColor,fontSize: 14)),
-              trailing: Text("${countryList[index]["hour"]!}:${countryList[index]["minute"]!}",
-              style: TextStyle(color: AppStyles.lightBackGroundColor,fontSize: 20)),
+              title: Text(provider.countries[index]["timezone"],
+              style: TextStyle(color: AppStyles.softWhite,fontSize: 20)),
+              subtitle: Text(_timeGap(provider.countries[index]).toString(),
+              style: TextStyle(color: AppStyles.softWhite,fontSize: 14)),
+              trailing: Text(hours,
+              style: TextStyle(color: AppStyles.softWhite,fontSize: 20)),
             ),
           ),
         ),
@@ -82,10 +98,19 @@ class _CityListState extends State<CityList>
     );
   }
 
+  _countryListControl()
+  {
+    final prov = Provider.of<WorldClockProvider>(context,listen: false);
+    if(prov.countries.isEmpty)
+    {
+      prov.fetchCountryHour("");
+    }
+  }
+
   @override
   void initState()
   {
-    Provider.of<WorldClockProvider>(context,listen: false).fetchCountries();
+    _countryListControl();
     super.initState();
   }
 

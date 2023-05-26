@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_clock_app/styles/app_style.dart';
 import 'package:my_clock_app/widgets/world%20clock/city_list.dart';
 import 'package:my_clock_app/widgets/world%20clock/clock_stream.dart';
+import 'package:my_clock_app/widgets/world%20clock/search_country.dart';
 
 class WorldClockPage extends StatefulWidget
 {
@@ -20,7 +21,7 @@ class _WorldClockPageState extends State<WorldClockPage>
     (
       appBar: AppBar
       (
-        backgroundColor: AppStyles.darkBackGroundColor,elevation: 0,
+        backgroundColor: AppStyles.backGroundColor,elevation: 0,
         toolbarHeight: 310,
         title: Column
         (
@@ -31,16 +32,16 @@ class _WorldClockPageState extends State<WorldClockPage>
             (
               padding: const EdgeInsets.all(10),
               child: Image.asset("images/world_map.png",
-              color: AppStyles.lightBackGroundColor),
+              color: AppStyles.softWhite),
             ),
             ListTile
             (
-              title: ClockWidget
-              (
-                style: TextStyle(color: AppStyles.lightBackGroundColor,fontSize: 30),
-              ),
-              trailing: IconButton(onPressed: (){},
-              icon: Icon(Icons.add,color: AppStyles.lightBackGroundColor)),
+              title: const ClockWidget(),
+              trailing: IconButton(onPressed:()
+              {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const SearchCountry()));
+              },
+              icon: Icon(Icons.add,color: AppStyles.softWhite)),
             ),
           ],
         ),

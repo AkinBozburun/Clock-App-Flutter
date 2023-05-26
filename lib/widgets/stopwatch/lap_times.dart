@@ -61,7 +61,7 @@ class _LapTimesState extends State<LapTimes>
           Padding
           (
             padding: const EdgeInsets.symmetric(vertical: 10),
-            child: Container(height: 1,color: AppStyles.lightBackGroundColor),
+            child: Container(height: 1,color: AppStyles.softWhite),
           ),
           _lapTimesListView(),
         ],

@@ -29,15 +29,21 @@ class _TimerPageState extends State<TimerPage> with TickerProviderStateMixin
         children: !value.isRunning ?
         [
           button(()=> value.pauseTimer(),
-            value.timer!.isActive ? Colors.red : AppStyles.lightBackGroundColor,
+            value.timer!.isActive ? Colors.red : AppStyles.softWhite,
             value.timer!.isActive ?  "Duraklat" :  "Devam et"),
           button(()=> value.resetTimer(),
             AppStyles.lightBlueColor,
             "Bitir"),
         ] :
         [
-          button(() => value.startTimer(),
-           AppStyles.lightBlueColor, "Başlat")
+          button(()
+          {
+            if(value.initialSeconds != 0)
+            {
+              value.startTimer();
+            }
+          },
+            AppStyles.lightBlueColor, "Başlat")
         ],
       ),
     ),

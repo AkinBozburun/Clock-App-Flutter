@@ -29,7 +29,7 @@ class _StopwatchPageState extends State<StopwatchPage>
           value.timer!.isActive ? "Durdur" : "Devam Et",
         ),
         button(()=> value.timer!.isActive? value.addLaps() : value.clearLapTimes(),
-          AppStyles.lightBackGroundColor,
+          AppStyles.softWhite,
           value.timer!.isActive? "Tur" : "Sıfırla",
         ),
       ] :

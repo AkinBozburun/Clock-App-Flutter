@@ -7,30 +7,33 @@ class WorldClockProvider extends ChangeNotifier
 {
   List countries = [];
 
-  String authKey = "M48RZ8Qc+fsU3eHxKx5MVA==mx1ELdox8rXqqYhX";
-
-  String clockApi = "https://api.api-ninjas.com/v1/worldtime?city=Tokyo";
-
-  fetchCountries() async
+  fetchCountryHour(city) async
   {
-   if(countries.isEmpty)
-   {
+    String clockApi = "https://api.api-ninjas.com/v1/worldtime?city=$city";
+
+    if(city != "")
+    {
       await http.get
       (
         Uri.parse(clockApi),
-        headers: {'X-Api-Key': authKey}
+        headers: {'X-Api-Key': "M48RZ8Qc+fsU3eHxKx5MVA==mx1ELdox8rXqqYhX"}
       ).then((value)
       {
         Map result = jsonDecode(value.body);
         _listItems(result);
       });
-   }
+    }
   }
   _listItems(result)
   {
     countries.add(result);
     notifyListeners();
     print("fetched!");
+  }
+  deleteItem(index)
+  {
+    countries.removeAt(index);
+    notifyListeners();
   }
 }
 

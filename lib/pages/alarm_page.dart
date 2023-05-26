@@ -22,7 +22,7 @@ class _AlarmPageState extends State<AlarmPage>
 
     return Scaffold
     (
-      backgroundColor: AppStyles.darkBackGroundColor,
+      backgroundColor: AppStyles.backGroundColor,
       appBar: AppBar
       (
         title: const Text("Alarmlarım"),

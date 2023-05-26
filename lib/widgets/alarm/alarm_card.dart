@@ -13,7 +13,7 @@ Widget alarmCard(hours,minutes,context)
     margin: const EdgeInsets.all(10),
     decoration: BoxDecoration
     (
-      color: AppStyles.darkBackGroundColor,
+      color: AppStyles.backGroundColor,
       borderRadius: BorderRadius.circular(16),
       boxShadow:
       [
@@ -38,7 +38,7 @@ Widget alarmCard(hours,minutes,context)
           [
             Text("$hours:$minutes",style: TextStyle
             (
-              color: AppStyles.lightBackGroundColor,
+              color: AppStyles.softWhite,
               fontSize: 50, fontWeight: FontWeight.bold,
             )),
             CupertinoSwitch(activeColor:
@@ -59,7 +59,7 @@ Widget alarmCard(hours,minutes,context)
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children:
               [
-                Text(days[index],style: TextStyle(color: AppStyles.lightBackGroundColor)),
+                Text(days[index],style: TextStyle(color: AppStyles.softWhite)),
                 const SizedBox(height: 10),
                 Container
                 (
@@ -71,7 +71,7 @@ Widget alarmCard(hours,minutes,context)
             ),
           ),
         ),
-        Text("HER GÜN",style: TextStyle(color: AppStyles.lightBackGroundColor)),
+        Text("HER GÜN",style: TextStyle(color: AppStyles.softWhite)),
       ],
     ),
   );

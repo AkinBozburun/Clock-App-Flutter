@@ -17,7 +17,7 @@ void main()
     (
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.light,
-      systemNavigationBarColor: AppStyles.darkBackGroundColor,
+      systemNavigationBarColor: AppStyles.backGroundColor,
       systemNavigationBarIconBrightness: Brightness.light
     )
   );
@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget
           debugShowCheckedModeBanner: false,
           theme: ThemeData
           (
-            scaffoldBackgroundColor: AppStyles.darkBackGroundColor
+            scaffoldBackgroundColor: AppStyles.backGroundColor
           ),
           home: const Tab(),
         ),
@@ -96,7 +96,7 @@ class _TabState extends State<Tab>
           labelPadding: const EdgeInsets.all(10),
           labelColor: AppStyles.lightBlueColor,
           labelStyle: AppStyles().tabTxtStyle,
-          unselectedLabelColor: AppStyles.lightBackGroundColor,
+          unselectedLabelColor: AppStyles.softWhite,
           splashBorderRadius: BorderRadius.circular(20),
           indicatorColor: Colors.transparent,
           tabs:
