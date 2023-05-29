@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:my_clock_app/core/providers.dart';
 import 'package:my_clock_app/styles/app_style.dart';
+import 'package:my_clock_app/widgets/empty_message.dart';
 import 'package:provider/provider.dart';
 
 class CityList extends StatefulWidget
@@ -25,7 +26,6 @@ class _CityListState extends State<CityList>
     double millis = nowSeconds - (hourGap.round()*3600000);
     var dt = DateTime.fromMillisecondsSinceEpoch(millis.toInt());
     var d24 = DateFormat("HH:mm").format(dt);
-    print(d24);
     hours = d24;
 
     int today = int.parse(DateFormat("dd").format(DateTime.now()));
@@ -64,16 +64,16 @@ class _CityListState extends State<CityList>
   {
     final provider = Provider.of<WorldClockProvider>(context);
 
-    return provider.countries.isEmpty ? const Center(child: CircularProgressIndicator()) :
+    return provider.countries.isEmpty ? const EmptyMessage() :
     ListView.builder
     (
       itemCount: provider.countries.length,
       itemBuilder: (context, index) => Padding
       (
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.only(left: 10,right: 10,bottom: 10),
         child: InkWell
         (
-          borderRadius: BorderRadius.circular(30),
+          borderRadius: BorderRadius.circular(20),
           onLongPress: () => provider.deleteItem(index),
           child: Ink
           (
@@ -103,7 +103,7 @@ class _CityListState extends State<CityList>
     final prov = Provider.of<WorldClockProvider>(context,listen: false);
     if(prov.countries.isEmpty)
     {
-      prov.fetchCountryHour("");
+      prov.fetchCountryHour("",null);
     }
   }
 

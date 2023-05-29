@@ -13,6 +13,6 @@ class AppStyles
   TextStyle tabTxtStyle = TextStyle(color: softWhite,fontSize: 12.w,fontWeight: FontWeight.w500);
   TextStyle timeTxtStyle = TextStyle(color: softWhite,fontSize: 16.sp,fontWeight: FontWeight.w500);
   TextStyle numberStyle = TextStyle(color: softWhite,fontSize: 36.sp,fontWeight: FontWeight.w500);
+  TextStyle messageStyle = TextStyle(color: softWhite,fontSize: 16.sp,fontWeight: FontWeight.w400);
   TextStyle buttonTxt = TextStyle(color: backGroundColor,fontSize: 16.sp,fontWeight: FontWeight.w600);
-
 }

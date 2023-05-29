@@ -17,7 +17,7 @@ class ScreenSize extends StatelessWidget
         [
           Text("Height: ${ScreenUtil().screenHeight}",style: AppStyles().numberStyle),
           Text("Width: ${ScreenUtil().screenWidth}",style: AppStyles().numberStyle),
-        ],),
+        ]),
       ),
     );
   }

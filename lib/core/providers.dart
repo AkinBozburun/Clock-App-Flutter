@@ -2,12 +2,13 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:my_clock_app/widgets/world%20clock/country_list.dart';
 
 class WorldClockProvider extends ChangeNotifier
 {
   List countries = [];
 
-  fetchCountryHour(city) async
+  fetchCountryHour(city,int? index) async
   {
     String clockApi = "https://api.api-ninjas.com/v1/worldtime?city=$city";
 
@@ -20,12 +21,13 @@ class WorldClockProvider extends ChangeNotifier
       ).then((value)
       {
         Map result = jsonDecode(value.body);
-        _listItems(result);
+        _listItems(result,index);
       });
     }
   }
-  _listItems(result)
+  _listItems(result,index)
   {
+    result["timezone"] = countryList[index]["City"];
     countries.add(result);
     notifyListeners();
     print("fetched!");

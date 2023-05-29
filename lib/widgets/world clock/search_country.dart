@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 class SearchCountry extends StatefulWidget
 {
   const SearchCountry({super.key});
-
   @override
   State<SearchCountry> createState() => _SearchCountryState();
 }
@@ -23,13 +22,13 @@ class _SearchCountryState extends State<SearchCountry>
       itemCount: countryList.length,
       itemBuilder: (context, index) => Padding
       (
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.only(left:10, right: 10,bottom: 10),
         child: InkWell
         (
           borderRadius: BorderRadius.circular(20),
-          onTap: ()
+          onTap: () async
           {
-            prov.fetchCountryHour(countryList[index]["City"]);
+            await prov.fetchCountryHour(countryList[index]["City"],index);
             Navigator.pop(context);
           },
           child: Ink
