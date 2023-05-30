@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:my_clock_app/core/providers.dart';
 import 'package:my_clock_app/styles/app_style.dart';
 import 'package:my_clock_app/widgets/world%20clock/city_list.dart';
 import 'package:my_clock_app/widgets/world%20clock/clock_stream.dart';
 import 'package:my_clock_app/widgets/world%20clock/search_country.dart';
+import 'package:provider/provider.dart';
 
 class WorldClockPage extends StatefulWidget
 {
@@ -14,6 +17,16 @@ class WorldClockPage extends StatefulWidget
 
 class _WorldClockPageState extends State<WorldClockPage>
 {
+  @override
+  void initState()
+  {
+    if(!Hive.isBoxOpen("country"))
+    {
+      Provider.of<WorldClockProvider>(context,listen: false).openBoxProvider();
+    }
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context)
   {

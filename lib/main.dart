@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:my_clock_app/core/box%20models/country_model.dart';
 import 'package:my_clock_app/core/providers.dart';
 import 'package:my_clock_app/pages/alarm_page.dart';
 import 'package:my_clock_app/pages/stopwatch_page.dart';
@@ -23,6 +24,8 @@ void main() async
     )
   );
   await Hive.initFlutter();
+  Hive.registerAdapter(CountryAdapter());
+
   runApp(const MyApp());
 }
 

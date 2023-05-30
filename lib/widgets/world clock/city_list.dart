@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:my_clock_app/core/box%20models/country_model.dart';
 import 'package:my_clock_app/core/providers.dart';
 import 'package:my_clock_app/styles/app_style.dart';
 import 'package:my_clock_app/widgets/empty_message.dart';
@@ -15,51 +17,6 @@ class CityList extends StatefulWidget
 
 class _CityListState extends State<CityList>
 {
-  _timeGap(countryTime)
-  {
-    DateTime now = DateTime.now();
-    DateTime country = DateTime.parse(countryTime["datetime"]);
-    int nowSeconds= now.millisecondsSinceEpoch;
-    int countrySeconds= country.millisecondsSinceEpoch;
-    double hourGap = (nowSeconds-countrySeconds)/3600000;
-
-    double millis = nowSeconds - (hourGap.round()*3600000);
-    var dt = DateTime.fromMillisecondsSinceEpoch(millis.toInt());
-    var d24 = DateFormat("HH:mm").format(dt);
-    hours = d24;
-
-    int today = int.parse(DateFormat("dd").format(DateTime.now()));
-    int countryDay = int.parse(countryTime["day"]);
-    String day = "";
-
-    if(hourGap.round() == 0)
-    {
-      return "Aynı saat";
-    }
-    else
-    {
-      if(countryDay > today)
-      {
-        day = "ileri, yarın";
-      }
-      else
-      {
-        day = "geri, dün";
-      }
-      if(countryDay == today && countrySeconds > nowSeconds)
-      {
-        day = "ileri";
-      }
-      if(countryDay == today && countrySeconds < nowSeconds)
-      {
-        day = "geri";
-      }
-    }
-    return "${hourGap.round().abs()} saat $day";
-  }
-
-  late String hours;
-
   _list()
   {
     final provider = Provider.of<WorldClockProvider>(context);
@@ -85,11 +42,11 @@ class _CityListState extends State<CityList>
             padding: const EdgeInsets.all(10),
             child: ListTile
             (
-              title: Text(provider.countries[index]["timezone"],
+              title: Text("",//provider.countries[index]["timezone"],
               style: TextStyle(color: AppStyles.softWhite,fontSize: 20)),
-              subtitle: Text(_timeGap(provider.countries[index]).toString(),
+              subtitle: Text("",
               style: TextStyle(color: AppStyles.softWhite,fontSize: 14)),
-              trailing: Text(hours,
+              trailing: Text("",
               style: TextStyle(color: AppStyles.softWhite,fontSize: 20)),
             ),
           ),
@@ -98,19 +55,19 @@ class _CityListState extends State<CityList>
     );
   }
 
-  _countryListControl()
-  {
-    final prov = Provider.of<WorldClockProvider>(context,listen: false);
-    if(prov.countries.isEmpty)
-    {
-      prov.fetchCountryHour("",null);
-    }
-  }
+  //_countryListControl()
+  //{
+  //  final prov = Provider.of<WorldClockProvider>(context,listen: false);
+  //  if(prov.countries.isEmpty)
+  //  {
+  //    prov.fetchCountryHour("",null);
+  //  }
+  //}
 
   @override
   void initState()
   {
-    _countryListControl();
+    //_countryListControl();
     super.initState();
   }
 

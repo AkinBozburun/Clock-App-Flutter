@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:intl/intl.dart';
+import 'package:my_clock_app/core/box%20models/country_model.dart';
 import 'package:my_clock_app/core/providers.dart';
 import 'package:my_clock_app/styles/app_style.dart';
 import 'package:my_clock_app/widgets/world%20clock/country_list.dart';
@@ -29,7 +32,8 @@ class _SearchCountryState extends State<SearchCountry>
           onTap: () async
           {
             await prov.fetchCountryHour(countryList[index]["City"],index);
-            Navigator.pop(context);
+            //addBox(index);
+            //Navigator.pop(context);
           },
           child: Ink
           (
@@ -50,6 +54,7 @@ class _SearchCountryState extends State<SearchCountry>
       ),
     );
   }
+
 
   @override
   Widget build(BuildContext context)

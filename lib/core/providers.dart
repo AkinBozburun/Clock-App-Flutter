@@ -1,14 +1,18 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
+import 'package:my_clock_app/core/box%20models/boxes.dart';
+import 'package:my_clock_app/core/box%20models/country_model.dart';
 import 'package:my_clock_app/widgets/world%20clock/country_list.dart';
 
 class WorldClockProvider extends ChangeNotifier
 {
   List countries = [];
 
-  fetchCountryHour(city,int? index) async
+  fetchCountryHour(city,int index) async
   {
     String clockApi = "https://api.api-ninjas.com/v1/worldtime?city=$city";
 
@@ -21,20 +25,130 @@ class WorldClockProvider extends ChangeNotifier
       ).then((value)
       {
         Map result = jsonDecode(value.body);
-        _listItems(result,index);
+        //_listItems(result,index);
+        _listBox(result,index);
+        _timeGap(result);
       });
     }
+    else
+    {print("city boş");}
   }
   _listItems(result,index)
   {
+    int i = 0;
+
     result["timezone"] = countryList[index]["City"];
-    countries.add(result);
+    //countries.add(result);
     notifyListeners();
     print("fetched!");
   }
+  _listBox(result,index)
+  {
+    int i = 0;
+
+    result["timezone"] = countryList[index]["City"];
+
+
+    var box = Hive.box<Country>("country");
+    var con = Country()
+    ..country = result["timezone"]
+    ..time = hours
+    ..timeGap = timeGapInfo;
+
+    box.put(i++, con);
+
+    print(box.length);
+
+  }
   deleteItem(index)
   {
-    countries.removeAt(index);
+    //countries.removeAt(index);
+    notifyListeners();
+  }
+
+  String timeGapInfo = "";
+  String hours = "";
+
+  _timeGap(countryTime)
+  {
+    DateTime now = DateTime.now();
+    DateTime country = DateTime.parse(countryTime["datetime"]);
+    int nowSeconds= now.millisecondsSinceEpoch;
+    int countrySeconds= country.millisecondsSinceEpoch;
+    double hourGap = (nowSeconds-countrySeconds)/3600000;
+
+    double millis = nowSeconds - (hourGap.round()*3600000);
+    var dt = DateTime.fromMillisecondsSinceEpoch(millis.toInt());
+    var d24 = DateFormat("HH:mm").format(dt);
+    hours = d24;
+    notifyListeners();
+
+    int today = int.parse(DateFormat("dd").format(DateTime.now()));
+    int countryDay = int.parse(countryTime["day"]);
+    String day = "";
+
+    if(hourGap.round() == 0)
+    {
+      return "Aynı saat";
+    }
+    else
+    {
+      if(countryDay > today)
+      {
+        day = "ileri, yarın";
+      }
+      else
+      {
+        day = "geri, dün";
+      }
+      if(countryDay == today && countrySeconds > nowSeconds)
+      {
+        day = "ileri";
+      }
+      if(countryDay == today && countrySeconds < nowSeconds)
+      {
+        day = "geri";
+      }
+    }
+    timeGapInfo = "${hourGap.round().abs()} saat $day";
+    notifyListeners();
+    //return "${hourGap.round().abs()} saat $day";
+  }
+
+  //addBox(i)
+  //{
+  //  //final provider = Provider.of<WorldClockProvider>(context,listen: false);
+//
+  //  var box = Hive.box<Country>("country");
+  //  var con = Country()
+  //  ..country = provider.countries[i]["timezone"]
+  //  ..time = hours
+  //  ..timeGap = _timeGap(provider.countries[i]);
+//
+  //  box.put(i, con);
+  //  provider.setBoxToList();
+  //}
+
+  List cBoxList = [];
+
+  openBoxProvider() async
+  {
+    await Hive.openBox<Country>("country");
+    print("box açıldı");
+    setBoxToList();
+  }
+  setBoxToList()
+  {
+    if(Hive.isBoxOpen("country"))
+    {
+      cBoxList = Boxes.getCountryBox().values.toList().cast<Country>();
+    }
+    notifyListeners();
+  }
+  clearBoxprovider()
+  {
+    Hive.box<Country>("country").clear();
+    cBoxList = [];
     notifyListeners();
   }
 }
