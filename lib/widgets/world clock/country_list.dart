@@ -9,8 +9,8 @@ final countryList =
     "Country" : "japan"
   },
   {
-    "City": "Oslo",
-    "Country" : "Norway"
+    "City": "Berlin",
+    "Country" : "Germany"
   },
   {
     "City": "Shanghai",
@@ -29,7 +29,7 @@ final countryList =
     "Country" : "USA"
   },
   {
-    "City": "Toronto",
-    "Country" : "Canada"
+    "City": "Moskow",
+    "Country" : "Russia"
   },
 ];

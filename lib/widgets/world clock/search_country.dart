@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:intl/intl.dart';
-import 'package:my_clock_app/core/box%20models/country_model.dart';
 import 'package:my_clock_app/core/providers.dart';
 import 'package:my_clock_app/styles/app_style.dart';
 import 'package:my_clock_app/widgets/world%20clock/country_list.dart';
@@ -62,10 +59,10 @@ class _SearchCountryState extends State<SearchCountry>
     (
       appBar: AppBar
       (
-        backgroundColor: Colors.black12,
+        backgroundColor: AppStyles.backGroundColor,
         elevation: 0,
         toolbarHeight: 80,
-        title: const TextField(),
+        title: Text("Şehir seçin",style: AppStyles().timeTxtStyle),
       ),
       body: _countryList(),
     );
