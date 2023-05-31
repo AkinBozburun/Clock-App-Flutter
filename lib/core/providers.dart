@@ -10,6 +10,8 @@ import 'package:my_clock_app/widgets/world%20clock/country_list.dart';
 
 class WorldClockProvider extends ChangeNotifier
 {
+  late Map result;
+
   fetchCountryHour(city,int index) async
   {
     String clockApi = "https://api.api-ninjas.com/v1/worldtime?city=$city";
@@ -20,7 +22,7 @@ class WorldClockProvider extends ChangeNotifier
       headers: {'X-Api-Key': "M48RZ8Qc+fsU3eHxKx5MVA==mx1ELdox8rXqqYhX"}
     ).then((value)
     {
-      Map result = jsonDecode(value.body);
+      result = jsonDecode(value.body);
       _listBox(result,index);
 
     });
@@ -32,8 +34,9 @@ class WorldClockProvider extends ChangeNotifier
     var box = Hive.box<Country>("country");
     var con = Country()
     ..country = result["timezone"]
-    ..time = _setTimeInfo(0, result)
-    ..timeGap = _setTimeInfo(1,result);
+    ..timeGap = setTimeInfo(1,result)
+    ..result = result;
+
 
     box.put(result["timezone"], con);
 
@@ -43,7 +46,7 @@ class WorldClockProvider extends ChangeNotifier
     print("fetched!");
   }
 
-  _setTimeInfo(mode,countryTime)
+  setTimeInfo(mode,countryTime)
   {
     DateTime now = DateTime.now();
     DateTime country = DateTime.parse(countryTime["datetime"]);
@@ -51,8 +54,8 @@ class WorldClockProvider extends ChangeNotifier
     int countrySeconds= country.millisecondsSinceEpoch;
     double hourGap = (nowSeconds-countrySeconds)/3600000;
 
-    double millis = nowSeconds - (hourGap.round()*3600000);
-    var dt = DateTime.fromMillisecondsSinceEpoch(millis.toInt());
+    double millisToHour = nowSeconds - (hourGap.round()*3600000);
+    var dt = DateTime.fromMillisecondsSinceEpoch(millisToHour.toInt());
 
     int today = int.parse(DateFormat("dd").format(DateTime.now()));
     int thisMonth = int.parse(DateFormat("M").format(DateTime.now()));
@@ -70,7 +73,7 @@ class WorldClockProvider extends ChangeNotifier
     }
     else
     {
-      if(countryDay > today || countryMonth > thisMonth)
+      if(countryDay > today && countryMonth > thisMonth)
       {
         day = "ileri, yarın";
       }

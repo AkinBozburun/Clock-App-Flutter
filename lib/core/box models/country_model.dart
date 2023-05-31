@@ -12,5 +12,5 @@ class Country
   late String timeGap;
 
   @HiveField(2)
-  late String time;
+  late Map result;
 }

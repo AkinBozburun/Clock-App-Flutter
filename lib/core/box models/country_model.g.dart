@@ -19,7 +19,7 @@ class CountryAdapter extends TypeAdapter<Country> {
     return Country()
       ..country = fields[0] as String
       ..timeGap = fields[1] as String
-      ..time = fields[2] as String;
+      ..result = (fields[2] as Map).cast<dynamic, dynamic>();
   }
 
   @override
@@ -31,7 +31,7 @@ class CountryAdapter extends TypeAdapter<Country> {
       ..writeByte(1)
       ..write(obj.timeGap)
       ..writeByte(2)
-      ..write(obj.time);
+      ..write(obj.result);
   }
 
   @override

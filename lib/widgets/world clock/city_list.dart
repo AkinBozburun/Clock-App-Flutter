@@ -3,7 +3,6 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:my_clock_app/core/providers.dart';
 import 'package:my_clock_app/styles/app_style.dart';
 import 'package:my_clock_app/widgets/empty_message.dart';
-import 'package:my_clock_app/widgets/world%20clock/country_list.dart';
 import 'package:provider/provider.dart';
 
 class CityList extends StatefulWidget
@@ -47,7 +46,7 @@ class _CityListState extends State<CityList>
                 style: TextStyle(color: AppStyles.softWhite,fontSize: 20)),
                 subtitle: Text(provider.cBoxList[index].timeGap,
                 style: TextStyle(color: AppStyles.softWhite,fontSize: 14)),
-                trailing: Text(provider.cBoxList[index].time,
+                trailing: Text(provider.setTimeInfo(0, provider.cBoxList[index].result),
                 style: TextStyle(color: AppStyles.softWhite,fontSize: 20)),
               ),
             ),
@@ -58,7 +57,10 @@ class _CityListState extends State<CityList>
     else
     {
       provider.openBoxProvider();
-      return const CircularProgressIndicator();
+      return Center(child: CircularProgressIndicator
+      (
+        color: AppStyles.softWhite,
+      ));
     }
   }
 
