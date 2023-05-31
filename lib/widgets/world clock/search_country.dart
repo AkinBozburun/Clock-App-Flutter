@@ -32,8 +32,7 @@ class _SearchCountryState extends State<SearchCountry>
           onTap: () async
           {
             await prov.fetchCountryHour(countryList[index]["City"],index);
-            //addBox(index);
-            //Navigator.pop(context);
+            Navigator.pop(context);
           },
           child: Ink
           (

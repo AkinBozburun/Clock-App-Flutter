@@ -10,66 +10,40 @@ import 'package:my_clock_app/widgets/world%20clock/country_list.dart';
 
 class WorldClockProvider extends ChangeNotifier
 {
-  List countries = [];
-
   fetchCountryHour(city,int index) async
   {
     String clockApi = "https://api.api-ninjas.com/v1/worldtime?city=$city";
 
-    if(city != "")
+    await http.get
+    (
+      Uri.parse(clockApi),
+      headers: {'X-Api-Key': "M48RZ8Qc+fsU3eHxKx5MVA==mx1ELdox8rXqqYhX"}
+    ).then((value)
     {
-      await http.get
-      (
-        Uri.parse(clockApi),
-        headers: {'X-Api-Key': "M48RZ8Qc+fsU3eHxKx5MVA==mx1ELdox8rXqqYhX"}
-      ).then((value)
-      {
-        Map result = jsonDecode(value.body);
-        //_listItems(result,index);
-        _listBox(result,index);
-        _timeGap(result);
-      });
-    }
-    else
-    {print("city boş");}
-  }
-  _listItems(result,index)
-  {
-    int i = 0;
+      Map result = jsonDecode(value.body);
+      _listBox(result,index);
 
-    result["timezone"] = countryList[index]["City"];
-    //countries.add(result);
-    notifyListeners();
-    print("fetched!");
+    });
   }
   _listBox(result,index)
   {
-    int i = 0;
-
     result["timezone"] = countryList[index]["City"];
-
 
     var box = Hive.box<Country>("country");
     var con = Country()
     ..country = result["timezone"]
-    ..time = hours
-    ..timeGap = timeGapInfo;
+    ..time = _setTimeInfo(0, result)
+    ..timeGap = _setTimeInfo(1,result);
 
-    box.put(i++, con);
+    box.put(result["timezone"], con);
 
-    print(box.length);
-
-  }
-  deleteItem(index)
-  {
-    //countries.removeAt(index);
+    setBoxToList();
     notifyListeners();
+
+    print("fetched!");
   }
 
-  String timeGapInfo = "";
-  String hours = "";
-
-  _timeGap(countryTime)
+  _setTimeInfo(mode,countryTime)
   {
     DateTime now = DateTime.now();
     DateTime country = DateTime.parse(countryTime["datetime"]);
@@ -79,21 +53,24 @@ class WorldClockProvider extends ChangeNotifier
 
     double millis = nowSeconds - (hourGap.round()*3600000);
     var dt = DateTime.fromMillisecondsSinceEpoch(millis.toInt());
-    var d24 = DateFormat("HH:mm").format(dt);
-    hours = d24;
-    notifyListeners();
 
     int today = int.parse(DateFormat("dd").format(DateTime.now()));
+    int thisMonth = int.parse(DateFormat("M").format(DateTime.now()));
+
     int countryDay = int.parse(countryTime["day"]);
+    int countryMonth = int.parse(countryTime["month"]);
+    String countryHour = DateFormat("HH:mm").format(dt);
+
     String day = "";
+    String gapInfo = "";
 
     if(hourGap.round() == 0)
     {
-      return "Aynı saat";
+      gapInfo = "Aynı saat";
     }
     else
     {
-      if(countryDay > today)
+      if(countryDay > today || countryMonth > thisMonth)
       {
         day = "ileri, yarın";
       }
@@ -101,7 +78,7 @@ class WorldClockProvider extends ChangeNotifier
       {
         day = "geri, dün";
       }
-      if(countryDay == today && countrySeconds > nowSeconds)
+      if(countryDay == today  && countrySeconds > nowSeconds)
       {
         day = "ileri";
       }
@@ -109,42 +86,38 @@ class WorldClockProvider extends ChangeNotifier
       {
         day = "geri";
       }
+      gapInfo = "${hourGap.round().abs()} saat $day";
     }
-    timeGapInfo = "${hourGap.round().abs()} saat $day";
-    notifyListeners();
-    //return "${hourGap.round().abs()} saat $day";
-  }
 
-  //addBox(i)
-  //{
-  //  //final provider = Provider.of<WorldClockProvider>(context,listen: false);
-//
-  //  var box = Hive.box<Country>("country");
-  //  var con = Country()
-  //  ..country = provider.countries[i]["timezone"]
-  //  ..time = hours
-  //  ..timeGap = _timeGap(provider.countries[i]);
-//
-  //  box.put(i, con);
-  //  provider.setBoxToList();
-  //}
+    return mode == 1 ? gapInfo : countryHour;
+  }
 
   List cBoxList = [];
 
   openBoxProvider() async
   {
-    await Hive.openBox<Country>("country");
-    print("box açıldı");
+    if(!Hive.isBoxOpen("country"))
+    {
+      await Hive.openBox<Country>("country");
+      notifyListeners();
+      print("box açıldı");
+    }
     setBoxToList();
   }
+
   setBoxToList()
   {
-    if(Hive.isBoxOpen("country"))
-    {
-      cBoxList = Boxes.getCountryBox().values.toList().cast<Country>();
-    }
+    cBoxList = Boxes.getCountryBox().values.toList().cast<Country>();
+    print("box listeye geçti");
+  }
+
+  deleteItemInBox(index)
+  {
+    Hive.box<Country>("country").delete(index);
+    setBoxToList();
     notifyListeners();
   }
+
   clearBoxprovider()
   {
     Hive.box<Country>("country").clear();
