@@ -51,20 +51,16 @@ class _SearchCountryState extends State<SearchCountry>
     );
   }
 
-
   @override
-  Widget build(BuildContext context)
-  {
-    return Scaffold
+  Widget build(BuildContext context) => Scaffold
+  (
+    appBar: AppBar
     (
-      appBar: AppBar
-      (
-        backgroundColor: AppStyles.backGroundColor,
-        elevation: 0,
-        toolbarHeight: 80,
-        title: Text("Şehir seçin",style: AppStyles().timeTxtStyle),
-      ),
-      body: _countryList(),
-    );
-  }
+      backgroundColor: AppStyles.backGroundColor,
+      elevation: 0,
+      toolbarHeight: 80,
+      title: Text("Şehir seçin",style: AppStyles.timeTxtStyleB),
+    ),
+    body: _countryList(),
+  );
 }

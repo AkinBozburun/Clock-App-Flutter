@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:my_clock_app/core/providers.dart';
 import 'package:my_clock_app/styles/app_style.dart';
@@ -21,7 +22,7 @@ class _CityListState extends State<CityList>
 
     if(Hive.isBoxOpen("country"))
     {
-      return provider.cBoxList.isEmpty ? const EmptyMessage() :
+      return provider.cBoxList.isEmpty ? const EmptyMessage(txt: "Liste boş") :
       ListView.builder
       (
         itemCount: provider.cBoxList.length,
@@ -39,15 +40,15 @@ class _CityListState extends State<CityList>
                 color: Colors.white12,
                 borderRadius: BorderRadius.circular(20),
               ),
-              padding: const EdgeInsets.all(10),
+              padding: EdgeInsets.only(left: 10,right: 10,top: 15.h,bottom: 15.h),
               child: ListTile
               (
                 title: Text(provider.cBoxList[index].country,
-                style: TextStyle(color: AppStyles.softWhite,fontSize: 20)),
+                style: AppStyles.timeTxtStyleB),
                 subtitle: Text(provider.cBoxList[index].timeGap,
-                style: TextStyle(color: AppStyles.softWhite,fontSize: 14)),
+                style: AppStyles.subTxtStyle),
                 trailing: Text(provider.setTimeInfo(0, provider.cBoxList[index].result),
-                style: TextStyle(color: AppStyles.softWhite,fontSize: 20)),
+                style: AppStyles.timeTxtStyleB),
               ),
             ),
           ),

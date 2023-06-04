@@ -24,7 +24,7 @@ class TimerIndicator extends StatelessWidget
         (
           strokeWidth: 6,
           backgroundColor: Colors.black,
-          valueColor: AlwaysStoppedAnimation(AppStyles.lightBlueColor),
+          valueColor: AlwaysStoppedAnimation(AppStyles.blueColor),
           value: value.initialSeconds / value.secondsFromPicker,
         ),
       ],

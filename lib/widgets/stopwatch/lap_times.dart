@@ -19,18 +19,18 @@ class _LapTimesState extends State<LapTimes>
     builder:(context, value, child) => SizedBox
     (
       height: 200.h,
-      width: 180.w,
+      width: 175.w,
       child: ListView.builder
       (
         itemCount: value.lapTimesList.length,
-        itemBuilder: (context, index) => SizedBox(height: 60,
+        itemBuilder: (context, index) => SizedBox(height: 50,
         child: Row
         (
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children:
           [
-            Text("${value.lapTimesList[index]["index"]}.",style: AppStyles().timeTxtStyle),
-            Text(value.lapTimesList[index]["lap"],style: AppStyles().timeTxtStyle),
+            Text("${value.lapTimesList[index]["index"]}.",style: AppStyles.timeTxtStyleN),
+            Text(value.lapTimesList[index]["lap"],style: AppStyles.timeTxtStyleN),
           ],
         )),
       ),
@@ -53,14 +53,14 @@ class _LapTimesState extends State<LapTimes>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children:
               [
-                Text("Tur",style: AppStyles().timeTxtStyle),
-                Text("Tur Süresi",style: AppStyles().timeTxtStyle),
+                Text("Tur",style: AppStyles.timeTxtStyleB),
+                Text("Tur Süresi",style: AppStyles.timeTxtStyleB),
               ],
             ),
           ),
           Padding
           (
-            padding: const EdgeInsets.symmetric(vertical: 10),
+            padding: const EdgeInsets.symmetric(vertical: 12),
             child: Container(height: 1,color: AppStyles.softWhite),
           ),
           _lapTimesListView(),

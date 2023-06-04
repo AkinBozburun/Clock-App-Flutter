@@ -73,7 +73,7 @@ class WorldClockProvider extends ChangeNotifier
     }
     else
     {
-      if(countryDay > today && countryMonth > thisMonth)
+      if(countryDay > today || countryMonth > thisMonth)
       {
         day = "ileri, yarın";
       }

@@ -32,7 +32,7 @@ class _TimerPageState extends State<TimerPage> with TickerProviderStateMixin
             value.timer!.isActive ? Colors.red : AppStyles.softWhite,
             value.timer!.isActive ?  "Duraklat" :  "Devam et"),
           button(()=> value.resetTimer(),
-            AppStyles.lightBlueColor,
+            AppStyles.blueColor,
             "Bitir"),
         ] :
         [
@@ -43,7 +43,7 @@ class _TimerPageState extends State<TimerPage> with TickerProviderStateMixin
               value.startTimer();
             }
           },
-            AppStyles.lightBlueColor, "Başlat")
+            AppStyles.blueColor, "Başlat")
         ],
       ),
     ),

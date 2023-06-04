@@ -7,14 +7,13 @@ class ClockWidget extends StatelessWidget
   const ClockWidget({super.key});
 
   @override
-  Widget build(BuildContext context)
-  {
-    return StreamBuilder
+  Widget build(BuildContext context) => StreamBuilder
+  (
+    stream: Stream.periodic(const Duration(seconds: 1)),
+    builder: (context, snapshot) => Text
     (
-      stream: Stream.periodic(const Duration(seconds: 1)),
-      builder: (context, snapshot) =>
-      Text(DateFormat('HH:mm:ss').format(DateTime.now()),
-      style: TextStyle(color: AppStyles.softWhite,fontSize: 30)),
-    );
-  }
+      DateFormat('HH:mm:ss').format(DateTime.now()),
+      style: AppStyles.clockStyle,
+    ),
+  );
 }

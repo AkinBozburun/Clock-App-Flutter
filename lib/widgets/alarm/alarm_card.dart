@@ -1,30 +1,19 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:my_clock_app/styles/app_style.dart';
 
 Widget alarmCard(hours,minutes,context)
 {
-  List days = ["P","S","Ç","P","C","C","P"];
+  List days = ["Pzt","Sal","Çar","Per","Cum","Cts","Pzr"];
   bool switchValue = true;
   return Container
   (
-    height: 210,
-    padding: const EdgeInsets.all(10),
-    margin: const EdgeInsets.all(10),
+    height: 180,
+    padding: const EdgeInsets.all(12),
+    margin: const EdgeInsets.only(left: 16,right: 16,bottom: 16),
     decoration: BoxDecoration
     (
-      color: AppStyles.backGroundColor,
-      borderRadius: BorderRadius.circular(16),
-      boxShadow:
-      [
-        BoxShadow
-        (
-          color: AppStyles().darkShadowColor,
-          spreadRadius: 1,
-          blurRadius: 5,
-          offset: const Offset(1, 1),
-        ),
-      ],
+      color: AppStyles.cardColor,
+      borderRadius: BorderRadius.circular(20),
     ),
     child: Column
     (
@@ -36,42 +25,38 @@ Widget alarmCard(hours,minutes,context)
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children:
           [
-            Text("$hours:$minutes",style: TextStyle
-            (
-              color: AppStyles.softWhite,
-              fontSize: 50, fontWeight: FontWeight.bold,
-            )),
-            CupertinoSwitch(activeColor:
-            AppStyles.lightBlueColor,value: switchValue, onChanged: (value) {}),
+            Text("$hours:$minutes",style: AppStyles().numberStyle),
+            CupertinoSwitch(activeColor: AppStyles.blueColor,
+            trackColor: AppStyles.backGroundColor,
+            value: switchValue, onChanged: (value){}),
           ],
         ),
         SizedBox
         (
-          height: 40,
+          height: 28,
           child: GridView.builder
           (
+            shrinkWrap: true,
             scrollDirection: Axis.horizontal,
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 40,
-            mainAxisSpacing: 15,mainAxisExtent: 40),
+            mainAxisSpacing: 5, mainAxisExtent: 40),
             itemCount: 7,
             itemBuilder: (context, index) => Column
             (
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children:
               [
-                Text(days[index],style: TextStyle(color: AppStyles.softWhite)),
-                const SizedBox(height: 10),
+                Text(days[index],style: AppStyles.subTxtStyle),
                 Container
                 (
-                  height: 6,
-                  decoration: BoxDecoration(shape: BoxShape.circle,
-                  color: AppStyles.lightBlueColor)
+                  height: 4,
+                  decoration: BoxDecoration(shape: BoxShape.circle, color: AppStyles.blueColor)
                 ),
               ],
             ),
           ),
         ),
-        Text("HER GÜN",style: TextStyle(color: AppStyles.softWhite)),
+        Text("HER GÜN",style: AppStyles.subTxtStyle),
       ],
     ),
   );

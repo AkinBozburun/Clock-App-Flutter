@@ -25,7 +25,7 @@ class _StopwatchPageState extends State<StopwatchPage>
       children: value.isRunning ?
       [
         button(() => value.timer!.isActive ? value.stopStopWatch() : value.startStopWatch(),
-          value.timer!.isActive ? Colors.red : AppStyles.lightBlueColor,
+          value.timer!.isActive ? Colors.red : AppStyles.blueColor,
           value.timer!.isActive ? "Durdur" : "Devam Et",
         ),
         button(()=> value.timer!.isActive? value.addLaps() : value.clearLapTimes(),
@@ -34,7 +34,7 @@ class _StopwatchPageState extends State<StopwatchPage>
         ),
       ] :
       [
-        button(() => value.startStopWatch(), AppStyles.lightBlueColor, "Başlat"),
+        button(() => value.startStopWatch(), AppStyles.blueColor, "Başlat"),
       ]
     ),
   );

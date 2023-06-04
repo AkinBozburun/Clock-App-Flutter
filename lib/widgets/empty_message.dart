@@ -3,11 +3,13 @@ import 'package:my_clock_app/styles/app_style.dart';
 
 class EmptyMessage extends StatelessWidget
 {
-  const EmptyMessage({super.key});
+  final String txt;
+
+  const EmptyMessage({super.key, required this.txt});
 
   @override
   Widget build(BuildContext context) => Center
   (
-    child: Text("Liste boş",style: AppStyles().messageStyle),
+    child: Text(txt,style: AppStyles.messageStyle),
   );
 }

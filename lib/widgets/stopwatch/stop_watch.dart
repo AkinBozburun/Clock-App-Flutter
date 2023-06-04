@@ -20,7 +20,7 @@ class _StopWatchWidgetState extends State<StopWatchWidget>
     return Consumer<StopWatchProvider>
     (
       builder: (context, value, child) => Text(value.stopWatchString(),
-      style: AppStyles().numberStyle, textScaleFactor: 1.2),
+      style: AppStyles().numberStyle,),
     );
   }
 }

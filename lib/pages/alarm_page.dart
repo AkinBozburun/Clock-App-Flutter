@@ -25,10 +25,10 @@ class _AlarmPageState extends State<AlarmPage>
       backgroundColor: AppStyles.backGroundColor,
       appBar: AppBar
       (
-        title: const Text("Alarmlarım"),
+        title: Text("Alarmlarım",style: AppStyles.timeTxtStyleB),
         backgroundColor: Colors.transparent,
         elevation: 0,
-        toolbarHeight: 70,
+        toolbarHeight: 90,
         actions:[IconButton(onPressed: (){}, icon: const Icon(Icons.add))],
       ),
       body: ListView.builder

@@ -64,55 +64,47 @@ class MyApp extends StatelessWidget
   }
 }
 
-class Tab extends StatefulWidget
+class Tab extends StatelessWidget
 {
   const Tab({super.key});
 
-  @override
-  State<Tab> createState() => _TabState();
-}
-
-class _TabState extends State<Tab>
-{
-  Widget tabTxt(txt) => Text(txt,);
+  Widget tabTxt(txt) => Text(txt,textAlign: TextAlign.center);
 
   @override
-  Widget build(BuildContext context)
-  {
-    return DefaultTabController
+  Widget build(BuildContext context) => DefaultTabController
+  (
+    length: 4,
+    initialIndex: 3,
+    child: Scaffold
     (
-      length: 4,
-      initialIndex: 3,
-      child: Scaffold
+      body: const TabBarView
       (
-        body: const TabBarView
-        (
-          physics: NeverScrollableScrollPhysics(),
-          children:
-          [
-            AlarmPage(),
-            WorldClockPage(),
-            StopwatchPage(),
-            TimerPage(),
-          ],
-        ),
-        bottomNavigationBar: TabBar
-        (
-          labelPadding: const EdgeInsets.all(10),
-          labelColor: AppStyles.lightBlueColor,
-          labelStyle: AppStyles().tabTxtStyle,
-          unselectedLabelColor: AppStyles.softWhite,
-          splashBorderRadius: BorderRadius.circular(20),
-          indicatorColor: Colors.transparent,
-          tabs:
-          [
-            tabTxt("Alarm"),
-            tabTxt('Dünya Saati'),
-            tabTxt('Kronometre'),
-            tabTxt('Zamanlayıcı'),
-          ],
-        ),
-      )
-    );
-  }
+        physics: NeverScrollableScrollPhysics(),
+        children:
+        [
+          AlarmPage(),
+          WorldClockPage(),
+          StopwatchPage(),
+          TimerPage(),
+        ],
+      ),
+      bottomNavigationBar: TabBar
+      (
+        labelPadding: const EdgeInsets.all(6),
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        labelColor: AppStyles.blueColor,
+        labelStyle: AppStyles.tabTxtStyle,
+        unselectedLabelColor: AppStyles.softWhite,
+        splashBorderRadius: BorderRadius.circular(20),
+        indicatorColor: AppStyles.blueColor,
+        tabs:
+        [
+          tabTxt("Alarm"),
+          tabTxt('Dünya Saati'),
+          tabTxt('Kronometre'),
+          tabTxt('Zamanlayıcı'),
+        ],
+      ),
+    )
+  );
 }
