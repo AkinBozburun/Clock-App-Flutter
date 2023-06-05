@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:my_clock_app/core/box%20models/boxes.dart';
 import 'package:my_clock_app/core/box%20models/country_model.dart';
+import 'package:my_clock_app/core/notification/notification_service.dart';
 import 'package:my_clock_app/widgets/world%20clock/country_list.dart';
 
 class WorldClockProvider extends ChangeNotifier
@@ -163,6 +164,10 @@ class TimerProvider extends ChangeNotifier
       }
       else
       {
+        NotificationService.showNotification
+        (
+          title: "Zamanlayıcı.", body: "Zamanlayıcı sona erdi."
+        );
         resetTimer();
       }
     });

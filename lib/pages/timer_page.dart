@@ -26,14 +26,14 @@ class _TimerPageState extends State<TimerPage> with TickerProviderStateMixin
       Row
       (
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: !value.isRunning ?
+        children:
+        !value.isRunning ?
         [
           button(()=> value.pauseTimer(),
             value.timer!.isActive ? Colors.red : AppStyles.softWhite,
             value.timer!.isActive ?  "Duraklat" :  "Devam et"),
           button(()=> value.resetTimer(),
-            AppStyles.blueColor,
-            "Bitir"),
+            AppStyles.blueColor, "Bitir"),
         ] :
         [
           button(()
