@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_clock_app/core/providers.dart';
 import 'package:my_clock_app/styles/app_style.dart';
 import 'package:my_clock_app/widgets/button.dart';
-import 'package:my_clock_app/widgets/timer/time_picker.dart';
+import 'package:my_clock_app/widgets/timer/timer_time_picker.dart';
 import 'package:my_clock_app/widgets/timer/timer_indicator.dart';
 import 'package:provider/provider.dart';
 
@@ -57,7 +57,7 @@ class _TimerPageState extends State<TimerPage> with TickerProviderStateMixin
       duration: const Duration(milliseconds: 200),
       child: !prov.isRunning ?
       TimerIndicator(height: 0.8.sw, width: 0.8.sw) :
-      const TimePickerScrollList()
+      const TimerTimePicker(),
     );
   }
 

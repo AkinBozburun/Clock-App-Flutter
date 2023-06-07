@@ -27,7 +27,6 @@ void main() async
   await Hive.initFlutter();
   await NotificationService.initializeNotification();
   Hive.registerAdapter(CountryAdapter());
-
   runApp(const MyApp());
 }
 
@@ -42,9 +41,10 @@ class MyApp extends StatelessWidget
     (
       providers:
       [
-        ChangeNotifierProvider(create: (context) => TimerProvider()),
-        ChangeNotifierProvider(create: (context) => StopWatchProvider()),
+        ChangeNotifierProvider(create: (context) => AlarmProvider()),
         ChangeNotifierProvider(create: (context) => WorldClockProvider()),
+        ChangeNotifierProvider(create: (context) => StopWatchProvider()),
+        ChangeNotifierProvider(create: (context) => TimerProvider()),
       ],
       child: ScreenUtilInit
       (

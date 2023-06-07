@@ -19,7 +19,7 @@ class TimerIndicator extends StatelessWidget
       children:
       [
         Center(child: Text(value.timerDurationString(),
-        style: AppStyles().numberStyle)),
+        style: AppStyles.numberStyle)),
         CircularProgressIndicator
         (
           strokeWidth: 6,

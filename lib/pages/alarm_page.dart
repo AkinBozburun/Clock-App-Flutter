@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_clock_app/styles/app_style.dart';
+import 'package:my_clock_app/widgets/alarm/add_alarm.dart';
 import 'package:my_clock_app/widgets/alarm/alarm_card.dart';
 
 class AlarmPage extends StatefulWidget
@@ -29,7 +30,11 @@ class _AlarmPageState extends State<AlarmPage>
         backgroundColor: Colors.transparent,
         elevation: 0,
         toolbarHeight: 90,
-        actions:[IconButton(onPressed: (){}, icon: const Icon(Icons.add))],
+        actions:[IconButton(onPressed: ()
+        {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => const AddAlarm()));
+        },
+        icon: const Icon(Icons.add))],
       ),
       body: ListView.builder
       (

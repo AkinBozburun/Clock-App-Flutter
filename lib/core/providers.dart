@@ -9,6 +9,12 @@ import 'package:my_clock_app/core/box%20models/country_model.dart';
 import 'package:my_clock_app/core/notification/notification_service.dart';
 import 'package:my_clock_app/widgets/world%20clock/country_list.dart';
 
+class AlarmProvider extends ChangeNotifier
+{
+  int hour = 0;
+  int minute = 0;
+}
+
 class WorldClockProvider extends ChangeNotifier
 {
   late Map result;

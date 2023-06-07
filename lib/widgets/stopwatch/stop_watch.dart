@@ -13,14 +13,13 @@ class StopWatchWidget extends StatefulWidget
 
 class _StopWatchWidgetState extends State<StopWatchWidget>
 {
-
   @override
   Widget build(BuildContext context)
   {
     return Consumer<StopWatchProvider>
     (
       builder: (context, value, child) => Text(value.stopWatchString(),
-      style: AppStyles().numberStyle,),
+      style: AppStyles.numberStyle,),
     );
   }
 }

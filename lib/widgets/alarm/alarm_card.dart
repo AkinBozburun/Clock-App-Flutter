@@ -25,7 +25,7 @@ Widget alarmCard(hours,minutes,context)
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children:
           [
-            Text("$hours:$minutes",style: AppStyles().numberStyle),
+            Text("$hours:$minutes",style: AppStyles.numberStyle),
             CupertinoSwitch(activeColor: AppStyles.blueColor,
             trackColor: AppStyles.backGroundColor,
             value: switchValue, onChanged: (value){}),
