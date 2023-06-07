@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
@@ -13,6 +14,26 @@ class AlarmProvider extends ChangeNotifier
 {
   int hour = 0;
   int minute = 0;
+
+  parseAlarm(year,month,day)
+  {
+    String mn = month < 10 ? "0$month" : month.toString();
+    String d = day < 10 ? "0$day" : day.toString();
+    String h = hour < 10 ? "0$hour" : hour.toString();
+    String m = minute < 10 ? "0$minute" : minute.toString();
+    String dateTxt = "$year-$mn-$d $h:$m:00";
+
+    return DateTime.parse(dateTxt);
+    //"$h : $m";
+  }
+
+  @pragma('vm:entry-point')
+  static void showAlarm()
+  {
+    NotificationService.showNotification(title: "Alarm", body: "Alarm çalıyor!",
+    category: NotificationCategory.Alarm,actionType: ActionType.KeepOnTop,
+    actionButtons: [NotificationActionButton(key: "stopAlarm", label: "Durdur")]);
+  }
 }
 
 class WorldClockProvider extends ChangeNotifier

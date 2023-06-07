@@ -1,3 +1,4 @@
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,6 +27,7 @@ void main() async
   );
   await Hive.initFlutter();
   await NotificationService.initializeNotification();
+  await AndroidAlarmManager.initialize();
   Hive.registerAdapter(CountryAdapter());
   runApp(const MyApp());
 }
@@ -73,40 +75,43 @@ class Tab extends StatelessWidget
   Widget tabTxt(txt) => Text(txt,textAlign: TextAlign.center);
 
   @override
-  Widget build(BuildContext context) => DefaultTabController
-  (
-    length: 4,
-    initialIndex: 3,
-    child: Scaffold
+  Widget build(BuildContext context)
+  {
+    return DefaultTabController
     (
-      body: const TabBarView
+      length: 4,
+      initialIndex: 0,
+      child: Scaffold
       (
-        physics: NeverScrollableScrollPhysics(),
-        children:
-        [
-          AlarmPage(),
-          WorldClockPage(),
-          StopwatchPage(),
-          TimerPage(),
-        ],
-      ),
-      bottomNavigationBar: TabBar
-      (
-        labelPadding: const EdgeInsets.all(6),
-        padding: const EdgeInsets.symmetric(vertical: 12),
-        labelColor: AppStyles.blueColor,
-        labelStyle: AppStyles.tabTxtStyle,
-        unselectedLabelColor: AppStyles.softWhite,
-        splashBorderRadius: BorderRadius.circular(20),
-        indicatorColor: AppStyles.blueColor,
-        tabs:
-        [
-          tabTxt("Alarm"),
-          tabTxt('Dünya Saati'),
-          tabTxt('Kronometre'),
-          tabTxt('Zamanlayıcı'),
-        ],
-      ),
-    )
-  );
+        body: const TabBarView
+        (
+          physics: NeverScrollableScrollPhysics(),
+          children:
+          [
+            AlarmPage(),
+            WorldClockPage(),
+            StopwatchPage(),
+            TimerPage(),
+          ],
+        ),
+        bottomNavigationBar: TabBar
+        (
+          labelPadding: const EdgeInsets.all(6),
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          labelColor: AppStyles.blueColor,
+          labelStyle: AppStyles.tabTxtStyle,
+          unselectedLabelColor: AppStyles.softWhite,
+          splashBorderRadius: BorderRadius.circular(20),
+          indicatorColor: AppStyles.blueColor,
+          tabs:
+          [
+            tabTxt("Alarm"),
+            tabTxt('Dünya Saati'),
+            tabTxt('Kronometre'),
+            tabTxt('Zamanlayıcı'),
+          ],
+        ),
+      )
+    );
+  }
 }

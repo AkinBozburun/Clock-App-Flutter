@@ -1,8 +1,10 @@
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:my_clock_app/core/providers.dart';
 import 'package:my_clock_app/styles/app_style.dart';
 import 'package:my_clock_app/widgets/alarm/alarm_time_picker.dart';
+import 'package:provider/provider.dart';
 
 class AddAlarm extends StatefulWidget
 {
@@ -14,11 +16,23 @@ class AddAlarm extends StatefulWidget
 
 class _AddAlarmState extends State<AddAlarm>
 {
-  Widget _button(txt) => TextButton
+  Widget _button(Function() press,txt) => TextButton
   (
-    onPressed: () => HapticFeedback.lightImpact(),
+    onPressed: press,
     child:  Text(txt),
   );
+
+  _setAlarm()
+  {
+    final provider = Provider.of<AlarmProvider>(context,listen: false);
+
+    final time = DateTime.now();
+
+    AndroidAlarmManager.oneShotAt(
+      provider.parseAlarm(time.year, time.month, time.day), 0, AlarmProvider.showAlarm,
+      alarmClock: true,exact: true,wakeup: true);
+
+  }
 
   @override
   Widget build(BuildContext context)
@@ -30,7 +44,7 @@ class _AddAlarmState extends State<AddAlarm>
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children:
         [
-          SizedBox(height: 10.h),
+          SizedBox(height: 20.h),
           const AlarmTimePicker(),
           Container
           (
@@ -46,9 +60,15 @@ class _AddAlarmState extends State<AddAlarm>
           Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children:
           [
-            _button("İptal et"),
-            _button("Oluştur"),
-          ])
+            _button((){},"İptal et"),
+            _button(()
+            {
+              _setAlarm();
+              //final prov = Provider.of<AlarmProvider>(context,listen: false);
+              //print(prov.parseAlarm("1999","09","11"));
+            },
+            "Oluştur"),
+          ]),
         ],
       ),
     );

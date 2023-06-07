@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:my_clock_app/core/providers.dart';
 import 'package:my_clock_app/styles/app_style.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +16,8 @@ class _AlarmTimePickerState extends State<AlarmTimePicker>
   final FixedExtentScrollController _hourController = FixedExtentScrollController(initialItem: DateTime.now().hour);
   final FixedExtentScrollController _minuteController = FixedExtentScrollController(initialItem: DateTime.now().minute);
 
-
+  int hour = 0;
+  int minute = 0;
 
   _timeFormatting()
   {
@@ -27,6 +27,14 @@ class _AlarmTimePickerState extends State<AlarmTimePicker>
     int m = _minuteController.selectedItem*60;
     int timeToSeconds = h+m;
     prov.convertTimeToSeconds(timeToSeconds);
+  }
+
+  _pickAlarm(int? hourValue, int? minuteValue)
+  {
+    final provider = Provider.of<AlarmProvider>(context,listen: false);
+
+    if(hourValue == null) provider.minute = minuteValue!;
+    if(minuteValue == null) provider.hour = hourValue!;
   }
 
   Widget hours(int i)
@@ -60,6 +68,20 @@ class _AlarmTimePickerState extends State<AlarmTimePicker>
 
   double itemExtent = 80;
 
+  _initAlarm()
+  {
+    final provider = Provider.of<AlarmProvider>(context,listen: false);
+    provider.hour = _hourController.initialItem;
+    provider.minute = _minuteController.initialItem;
+  }
+
+  @override
+  void initState()
+  {
+    _initAlarm();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) => Row
   (
@@ -75,8 +97,8 @@ class _AlarmTimePickerState extends State<AlarmTimePicker>
           diameterRatio: 2,
           onSelectedItemChanged: (value)
           {
-            _timeFormatting();
-            HapticFeedback.lightImpact();
+            _pickAlarm(value,null);
+            //_timeFormatting();
           },
           physics: const FixedExtentScrollPhysics(),
           childDelegate: ListWheelChildBuilderDelegate
@@ -96,8 +118,8 @@ class _AlarmTimePickerState extends State<AlarmTimePicker>
           diameterRatio: 2,
           onSelectedItemChanged: (value)
           {
-            _timeFormatting();
-            HapticFeedback.lightImpact();
+            //_timeFormatting();
+            _pickAlarm(null, value);
           },
           physics: const FixedExtentScrollPhysics(),
           childDelegate: ListWheelChildBuilderDelegate

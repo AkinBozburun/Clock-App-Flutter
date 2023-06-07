@@ -1,8 +1,10 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 
-class NotificationService {
-  static Future<void> initializeNotification() async {
+class NotificationService
+{
+  static Future<void> initializeNotification() async
+  {
     await AwesomeNotifications().initialize(
       null,
       [
@@ -11,13 +13,14 @@ class NotificationService {
           channelKey: 'timer_channel',
           channelName: 'Basic notifications',
           channelDescription: 'Notification channel for basic tests',
-          defaultColor: const Color(0xFF9D50DD),
+          defaultColor: Colors.white,
           ledColor: Colors.white,
           importance: NotificationImportance.Max,
           channelShowBadge: true,
-          onlyAlertOnce: true,
+          defaultRingtoneType: DefaultRingtoneType.Alarm,
           playSound: true,
           criticalAlerts: true,
+
         )
       ],
       debug: true,
@@ -62,12 +65,12 @@ class NotificationService {
   static Future<void> onActionReceivedMethod(ReceivedAction receivedAction) async
   {
     debugPrint('onActionReceivedMethod');
-    final payload = receivedAction.buttonKeyPressed;
-    if (payload == "stop")
+    final buttonKey = receivedAction.buttonKeyPressed;
+    if(buttonKey == "stopAlarm")
     {
-      print("durduruldu");
+      print("alarm durduruldu.");
     }
-    if(payload == "start")
+    if(buttonKey == "start")
     {
       print("başlatıldı.");
     }
@@ -85,11 +88,13 @@ class NotificationService {
     final List<NotificationActionButton>? actionButtons,
     final bool scheduled = false,
     final int? interval,
-  }) async {
+  }) async
+  {
     assert(!scheduled || (scheduled && interval != null));
 
     await AwesomeNotifications().createNotification(
-      content: NotificationContent(
+      content: NotificationContent
+      (
         id: -1,
         channelKey: 'timer_channel',
         title: title,
@@ -102,14 +107,13 @@ class NotificationService {
         bigPicture: bigPicture,
       ),
       actionButtons: actionButtons,
-      schedule: scheduled
-          ? NotificationInterval(
-              interval: interval,
-              timeZone:
-                  await AwesomeNotifications().getLocalTimeZoneIdentifier(),
-              preciseAlarm: true,
-            )
-          : null,
+      schedule: scheduled ? NotificationInterval
+      (
+        interval: interval,
+        timeZone: await AwesomeNotifications().getLocalTimeZoneIdentifier(),
+        preciseAlarm: true,
+      )
+      : null,
     );
   }
 }
