@@ -13,7 +13,8 @@ class AlarmPage extends StatefulWidget
 
 class _AlarmPageState extends State<AlarmPage>
 {
-  TimeOfDay time = const TimeOfDay(hour: 10, minute: 30);
+  String alarmName = "Toplantı";
+  TimeOfDay time = const TimeOfDay(hour: 1, minute: 5);
 
   @override
   Widget build(BuildContext context)
@@ -27,19 +28,17 @@ class _AlarmPageState extends State<AlarmPage>
       appBar: AppBar
       (
         title: Text("Alarmlarım",style: AppStyles.timeTxtStyleB),
-        backgroundColor: Colors.transparent,
+        backgroundColor: AppStyles.backGroundColor,
         elevation: 0,
         toolbarHeight: 90,
-        actions:[IconButton(onPressed: ()
-        {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => const AddAlarm()));
-        },
+        actions: [IconButton(onPressed: () => Navigator.push(context,
+        MaterialPageRoute(builder: (context) => const AddAlarm())),
         icon: const Icon(Icons.add))],
       ),
       body: ListView.builder
       (
         itemCount: 3,
-        itemBuilder: (context, index) => alarmCard(hours, minutes,context),
+        itemBuilder: (context, index) => alarmCard(alarmName,hours, minutes,context),
       ),
     );
   }

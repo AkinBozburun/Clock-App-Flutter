@@ -24,11 +24,10 @@ class AlarmProvider extends ChangeNotifier
     String dateTxt = "$year-$mn-$d $h:$m:00";
 
     return DateTime.parse(dateTxt);
-    //"$h : $m";
   }
 
   @pragma('vm:entry-point')
-  static void showAlarm()
+  static void showAlarmNotification()
   {
     NotificationService.showNotification(title: "Alarm", body: "Alarm çalıyor!",
     category: NotificationCategory.Alarm,actionType: ActionType.KeepOnTop,
@@ -52,7 +51,6 @@ class WorldClockProvider extends ChangeNotifier
     {
       result = jsonDecode(value.body);
       _listBox(result,index);
-
     });
   }
   _listBox(result,index)
@@ -64,7 +62,6 @@ class WorldClockProvider extends ChangeNotifier
     ..country = result["timezone"]
     ..timeGap = setTimeInfo(1,result)
     ..result = result;
-
 
     box.put(result["timezone"], con);
 

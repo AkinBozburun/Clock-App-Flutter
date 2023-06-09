@@ -19,16 +19,6 @@ class _AlarmTimePickerState extends State<AlarmTimePicker>
   int hour = 0;
   int minute = 0;
 
-  _timeFormatting()
-  {
-    final prov = Provider.of<TimerProvider>(context,listen: false);
-
-    int h = _hourController.selectedItem*3600;
-    int m = _minuteController.selectedItem*60;
-    int timeToSeconds = h+m;
-    prov.convertTimeToSeconds(timeToSeconds);
-  }
-
   _pickAlarm(int? hourValue, int? minuteValue)
   {
     final provider = Provider.of<AlarmProvider>(context,listen: false);

@@ -28,10 +28,13 @@ class _AddAlarmState extends State<AddAlarm>
 
     final time = DateTime.now();
 
-    AndroidAlarmManager.oneShotAt(
-      provider.parseAlarm(time.year, time.month, time.day), 0, AlarmProvider.showAlarm,
-      alarmClock: true,exact: true,wakeup: true);
-
+    AndroidAlarmManager.oneShotAt
+    (
+      provider.parseAlarm(time.year, time.month, time.day),
+      0, AlarmProvider.showAlarmNotification,
+      alarmClock: true,exact: true,wakeup: true,
+    )
+    .then((value) => Navigator.pop(context));
   }
 
   @override
@@ -60,12 +63,14 @@ class _AddAlarmState extends State<AddAlarm>
           Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children:
           [
-            _button((){},"İptal et"),
             _button(()
             {
-              _setAlarm();
-              //final prov = Provider.of<AlarmProvider>(context,listen: false);
-              //print(prov.parseAlarm("1999","09","11"));
+              Navigator.pop(context);
+            },
+            "İptal et"),
+            _button(()
+            {
+              //_setAlarm();
             },
             "Oluştur"),
           ]),
