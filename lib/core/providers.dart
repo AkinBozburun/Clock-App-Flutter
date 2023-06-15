@@ -33,6 +33,23 @@ class AlarmProvider extends ChangeNotifier
     category: NotificationCategory.Alarm,actionType: ActionType.KeepOnTop,
     actionButtons: [NotificationActionButton(key: "stopAlarm", label: "Durdur")]);
   }
+
+  List<Map> days =
+  [
+    {"day": "Pzt", "isSelected" : false},
+    {"day": "Sal", "isSelected" : false},
+    {"day": "Çar", "isSelected" : false},
+    {"day": "Per", "isSelected" : false},
+    {"day": "Cum", "isSelected" : false},
+    {"day": "Cts", "isSelected" : false},
+    {"day": "Paz", "isSelected" : false},
+  ];
+
+  dayPickOverlay(index,bool chck)
+  {
+    days[index]["isSelected"] = chck;
+    notifyListeners();
+  }
 }
 
 class WorldClockProvider extends ChangeNotifier

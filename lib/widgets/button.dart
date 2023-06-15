@@ -19,7 +19,7 @@ Widget button(void Function() press, Color color, String txt)
         color: color,
         borderRadius: radius,
       ),
-      child: Center(child: Text(txt,style: AppStyles().buttonTxt)),
+      child: Center(child: Text(txt,style: AppStyles.buttonTxt)),
     ),
   );
 }

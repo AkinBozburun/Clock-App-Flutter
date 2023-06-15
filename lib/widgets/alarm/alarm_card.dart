@@ -1,11 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:my_clock_app/core/providers.dart';
 import 'package:my_clock_app/styles/app_style.dart';
+import 'package:provider/provider.dart';
 
 Widget alarmCard(alarmName,hours,minutes,context)
 {
-  List days = ["Pzt","Sal","Çar","Per","Cum","Cts","Pzr"];
+  final provider = Provider.of<AlarmProvider>(context,listen: false);
+
   bool switchValue = true;
   return Padding
   (
@@ -48,24 +51,28 @@ Widget alarmCard(alarmName,hours,minutes,context)
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
                 gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 40,
-                mainAxisSpacing: 5, mainAxisExtent: 40),
+                mainAxisSpacing: 10, mainAxisExtent: 40),
                 itemCount: 7,
                 itemBuilder: (context, index) => Column
                 (
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children:
                   [
-                    Text(days[index],style: AppStyles.subTxtStyle),
+                    Text(provider.days[index]["day"],
+                      style: provider.days[index]["isSelected"] == true ?
+                      AppStyles.blueTxtStyle : AppStyles.subTxtStyle),
                     Container
                     (
                       height: 4,
-                      decoration: BoxDecoration(shape: BoxShape.circle, color: AppStyles.blueColor)
+                      decoration: BoxDecoration(shape: BoxShape.circle,
+                      color: provider.days[index]["isSelected"] == true ?
+                      AppStyles.blueColor : AppStyles.softWhite),
                     ),
                   ],
                 ),
               ),
             ),
-            Text("HER GÜN",style: AppStyles.subTxtStyle),
+            Text("3 GÜN",style: AppStyles.subTxtStyle),
           ],
         ),
       ),
