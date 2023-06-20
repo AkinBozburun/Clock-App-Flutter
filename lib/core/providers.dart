@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:my_clock_app/core/box%20models/alarm_model.dart';
 import 'package:my_clock_app/core/box%20models/boxes.dart';
 import 'package:my_clock_app/core/box%20models/country_model.dart';
 import 'package:my_clock_app/core/notification/notification_service.dart';
@@ -51,7 +52,47 @@ class AlarmProvider extends ChangeNotifier
     notifyListeners();
   }
 
-  List alarmsBoxList = [];
+  List alarmBoxList = [];
+
+  setBoxToList()
+  {
+    alarmBoxList = Boxes.getAlarmBox().values.toList().cast<Alarm>();
+    print("box listeye geçti");
+  }
+
+  _listAlarmBox(alarmName,isActive,hour,minute)
+  {
+    final box = Boxes.getAlarmBox();
+    var con = Alarm()
+    ..alarmName = alarmName ?? ""
+    ..hour = hour
+    ..minute = minute
+    ..isActive = isActive
+    ..days = days;
+
+    box.put(alarmName,con);
+
+    setBoxToList();
+    notifyListeners();
+  }
+
+  openBoxProvider() async
+  {
+    if(!Hive.isBoxOpen("Alarm"))
+    {
+      await Hive.openBox<Alarm>("Alarm");
+      notifyListeners();
+      print("Alarm box açıldı");
+    }
+    setBoxToList();
+  }
+
+  deleteItemInBox(index)
+  {
+    Boxes.getAlarmBox().delete(index);
+    setBoxToList();
+    notifyListeners();
+  }
 }
 
 class WorldClockProvider extends ChangeNotifier
@@ -94,12 +135,12 @@ class WorldClockProvider extends ChangeNotifier
   {
     DateTime now = DateTime.now();
     DateTime country = DateTime.parse(countryTime["datetime"]);
-    int nowSeconds= now.millisecondsSinceEpoch;
-    int countrySeconds= country.millisecondsSinceEpoch;
-    double hourGap = (nowSeconds-countrySeconds)/3600000;
+    int nowMilliSeconds= now.millisecondsSinceEpoch;
+    int countryMilliSeconds= country.millisecondsSinceEpoch;
+    double hourGap = (nowMilliSeconds-countryMilliSeconds)/3600000;
 
-    double millisToHour = nowSeconds - (hourGap.round()*3600000);
-    var dt = DateTime.fromMillisecondsSinceEpoch(millisToHour.toInt());
+    double millisToHour = nowMilliSeconds - (hourGap.round()*3600000);
+    DateTime dt = DateTime.fromMillisecondsSinceEpoch(millisToHour.toInt());
 
     int today = int.parse(DateFormat("dd").format(DateTime.now()));
     int thisMonth = int.parse(DateFormat("M").format(DateTime.now()));
@@ -125,11 +166,11 @@ class WorldClockProvider extends ChangeNotifier
       {
         day = "geri, dün";
       }
-      if(countryDay == today  && countrySeconds > nowSeconds)
+      if(countryDay == today  && countryMilliSeconds > nowMilliSeconds)
       {
         day = "ileri";
       }
-      if(countryDay == today && countrySeconds < nowSeconds)
+      if(countryDay == today && countryMilliSeconds < nowMilliSeconds)
       {
         day = "geri";
       }
@@ -152,12 +193,6 @@ class WorldClockProvider extends ChangeNotifier
     setBoxToList();
   }
 
-  setBoxToList()
-  {
-    cBoxList = Boxes.getCountryBox().values.toList().cast<Country>();
-    print("box listeye geçti");
-  }
-
   deleteItemInBox(index)
   {
     Hive.box<Country>("country").delete(index);
@@ -165,11 +200,10 @@ class WorldClockProvider extends ChangeNotifier
     notifyListeners();
   }
 
-  clearBoxprovider()
+  setBoxToList()
   {
-    Hive.box<Country>("country").clear();
-    cBoxList = [];
-    notifyListeners();
+    cBoxList = Boxes.getCountryBox().values.toList().cast<Country>();
+    print("box listeye geçti");
   }
 }
 
