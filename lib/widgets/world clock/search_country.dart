@@ -26,11 +26,7 @@ class _SearchCountryState extends State<SearchCountry>
         child: InkWell
         (
           borderRadius: BorderRadius.circular(20),
-          onTap: () async
-          {
-            await prov.fetchCountryHour(countryList[index]["City"],index);
-            Navigator.pop(context);
-          },
+          onTap: () async => await prov.fetchCountryHour(countryList[index]["City"],index,context),
           child: Ink
           (
             decoration: BoxDecoration

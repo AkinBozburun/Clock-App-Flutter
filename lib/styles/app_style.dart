@@ -14,6 +14,7 @@ class AppStyles
   static TextStyle numberStyle = TextStyle(color: softWhite,fontSize: 42,fontFamily: "Poppins",fontWeight: FontWeight.w600);
   static TextStyle clockStyle = TextStyle(color: softWhite,fontSize: 36,fontFamily: "Poppins",fontWeight: FontWeight.w600);
   static TextStyle subTxtStyle = TextStyle(color: softWhite,fontSize: 14,fontFamily: "Poppins",fontWeight: FontWeight.w400);
+  static TextStyle darkTxtStyle = TextStyle(color: backGroundColor,fontSize: 14,fontFamily: "Poppins",fontWeight: FontWeight.w500);
   static TextStyle blueTxtStyle = TextStyle(color: blueColor,fontSize: 14,fontFamily: "Poppins",fontWeight: FontWeight.w500);
 
   static TextStyle messageStyle = TextStyle(color: softWhite,fontSize: 18,fontFamily: "Poppins",fontWeight: FontWeight.w500);

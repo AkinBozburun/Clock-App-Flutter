@@ -16,9 +16,6 @@ class _AlarmTimePickerState extends State<AlarmTimePicker>
   final FixedExtentScrollController _hourController = FixedExtentScrollController(initialItem: DateTime.now().hour);
   final FixedExtentScrollController _minuteController = FixedExtentScrollController(initialItem: DateTime.now().minute);
 
-  int hour = 0;
-  int minute = 0;
-
   _pickAlarm(int? hourValue, int? minuteValue)
   {
     final provider = Provider.of<AlarmProvider>(context,listen: false);
@@ -88,7 +85,6 @@ class _AlarmTimePickerState extends State<AlarmTimePicker>
           onSelectedItemChanged: (value)
           {
             _pickAlarm(value,null);
-            //_timeFormatting();
           },
           physics: const FixedExtentScrollPhysics(),
           childDelegate: ListWheelChildBuilderDelegate
@@ -106,19 +102,12 @@ class _AlarmTimePickerState extends State<AlarmTimePicker>
           controller: _minuteController,
           itemExtent: itemExtent,
           diameterRatio: 2,
-          onSelectedItemChanged: (value)
-          {
-            //_timeFormatting();
-            _pickAlarm(null, value);
-          },
+          onSelectedItemChanged: (value) => _pickAlarm(null, value),
           physics: const FixedExtentScrollPhysics(),
           childDelegate: ListWheelChildBuilderDelegate
           (
             childCount: 60,
-            builder: (context, index)
-            {
-              return minutes(index);
-            }
+            builder: (context, index) => minutes(index)
           ),
         )
       ),

@@ -45,18 +45,20 @@ class AlarmProvider extends ChangeNotifier
     {"day": "Paz", "isSelected" : false},
   ];
 
-  dayPickOverlay(index,bool chck)
+  pickDay(index)
   {
-    days[index]["isSelected"] = chck;
+    days[index]["isSelected"] = !days[index]["isSelected"];
     notifyListeners();
   }
+
+  List alarmsBoxList = [];
 }
 
 class WorldClockProvider extends ChangeNotifier
 {
   late Map result;
 
-  fetchCountryHour(city,int index) async
+  fetchCountryHour(city,int index, context) async
   {
     String clockApi = "https://api.api-ninjas.com/v1/worldtime?city=$city";
 
@@ -68,13 +70,13 @@ class WorldClockProvider extends ChangeNotifier
     {
       result = jsonDecode(value.body);
       _listBox(result,index);
-    });
+    }).then((value) => Navigator.pop(context));
   }
   _listBox(result,index)
   {
     result["timezone"] = countryList[index]["City"];
 
-    var box = Hive.box<Country>("country");
+    final box = Boxes.getCountryBox();
     var con = Country()
     ..country = result["timezone"]
     ..timeGap = setTimeInfo(1,result)
@@ -145,7 +147,7 @@ class WorldClockProvider extends ChangeNotifier
     {
       await Hive.openBox<Country>("country");
       notifyListeners();
-      print("box açıldı");
+      print("World Clock box açıldı");
     }
     setBoxToList();
   }

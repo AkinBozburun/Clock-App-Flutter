@@ -6,34 +6,39 @@ part of 'alarm_model.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class CountryAdapter extends TypeAdapter<Country> {
+class AlarmAdapter extends TypeAdapter<Alarm> {
   @override
   final int typeId = 1;
 
   @override
-  Country read(BinaryReader reader) {
+  Alarm read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Country()
-      ..hour = fields[0] as String
-      ..minute = fields[1] as String
-      ..isActive = fields[2] as bool
-      ..days = (fields[3] as List).cast<String>();
+    return Alarm()
+      ..alarmName = fields[0] as String?
+      ..hour = fields[1] as String
+      ..minute = fields[2] as String
+      ..isActive = fields[3] as bool
+      ..days = (fields[4] as List)
+          .map((dynamic e) => (e as Map).cast<dynamic, dynamic>())
+          .toList();
   }
 
   @override
-  void write(BinaryWriter writer, Country obj) {
+  void write(BinaryWriter writer, Alarm obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
-      ..write(obj.hour)
+      ..write(obj.alarmName)
       ..writeByte(1)
-      ..write(obj.minute)
+      ..write(obj.hour)
       ..writeByte(2)
-      ..write(obj.isActive)
+      ..write(obj.minute)
       ..writeByte(3)
+      ..write(obj.isActive)
+      ..writeByte(4)
       ..write(obj.days);
   }
 
@@ -43,7 +48,7 @@ class CountryAdapter extends TypeAdapter<Country> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is CountryAdapter &&
+      other is AlarmAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

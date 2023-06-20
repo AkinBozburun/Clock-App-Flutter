@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 
 Widget alarmCard(alarmName,hours,minutes,context)
 {
-  final provider = Provider.of<AlarmProvider>(context,listen: false);
+  final provider = Provider.of<AlarmProvider>(context);
 
   bool switchValue = true;
   return Padding
@@ -31,7 +31,8 @@ Widget alarmCard(alarmName,hours,minutes,context)
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children:
           [
-            Align(alignment: AlignmentDirectional.topStart,child: Text(alarmName,style: AppStyles.subTxtStyle)),
+            Align(alignment: AlignmentDirectional.topStart,
+            child: Text(alarmName,style: AppStyles.subTxtStyle)),
             Row
             (
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -61,7 +62,7 @@ Widget alarmCard(alarmName,hours,minutes,context)
                     Text(provider.days[index]["day"],
                       style: provider.days[index]["isSelected"] == true ?
                       AppStyles.blueTxtStyle : AppStyles.subTxtStyle),
-                    Container
+                    Container //Dot
                     (
                       height: 4,
                       decoration: BoxDecoration(shape: BoxShape.circle,

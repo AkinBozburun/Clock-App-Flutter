@@ -32,50 +32,36 @@ class _AddAlarmState extends State<AddAlarm>
   {
     final provider = Provider.of<AlarmProvider>(context);
 
-    bool chck = false;
-
     return SizedBox
     (
-      height: 32,
+      height: 36,
       child: GridView.builder
       (
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
-        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-        maxCrossAxisExtent: 40, mainAxisSpacing: 10, mainAxisExtent: 40),
+        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+        maxCrossAxisExtent: 40.w, mainAxisSpacing: 10, mainAxisExtent: 40),
         itemCount: 7,
-        itemBuilder: (context, index) => Ink
+        itemBuilder: (context, index) => InkWell
         (
-          height: 10,
-          width: 10,
-          decoration: BoxDecoration
+          onTap: () => provider.pickDay(index),
+          child: AnimatedContainer
           (
-            border: Border.all(color: AppStyles.backGroundColor),
-            shape: BoxShape.circle
-          ),
-          child: InkWell
-          (
-            onTap: ()
-            {
-              chck = !chck;
-              provider.dayPickOverlay(index, chck);
-              print(provider.days[index]["isSelected"]);
-            },
-            child: Ink
+            width: 36,
+            duration: const Duration(milliseconds: 150),
+            decoration: BoxDecoration
             (
-              decoration: BoxDecoration
-              (
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.black
-              ),
-              child: Center
-              (
-                child: Text(provider.days[index]["day"],
-                  style: provider.days[index]["isSelected"] == true ?
-                  AppStyles.blueTxtStyle : AppStyles.subTxtStyle),
-              ),
+              borderRadius: BorderRadius.circular(16),
+              color: provider.days[index]["isSelected"] == true ?
+               AppStyles.blueColor : Colors.transparent
             ),
-          )
+            child: Center
+            (
+              child: Text(provider.days[index]["day"],
+                style: provider.days[index]["isSelected"] == true ?
+                AppStyles.darkTxtStyle : AppStyles.subTxtStyle),
+            ),
+          ),
         ),
       ),
     );
@@ -85,15 +71,17 @@ class _AddAlarmState extends State<AddAlarm>
   {
     final provider = Provider.of<AlarmProvider>(context,listen: false);
 
-    final time = DateTime.now();
+    //final time = DateTime.now();
+    //
+    //AndroidAlarmManager.oneShotAt
+    //(
+    //  provider.parseAlarm(time.year, time.month, time.day),
+    //  0, AlarmProvider.showAlarmNotification,
+    //  alarmClock: true,exact: true,wakeup: true,
+    //)
+    //.then((value) => Navigator.pop(context));
 
-    AndroidAlarmManager.oneShotAt
-    (
-      provider.parseAlarm(time.year, time.month, time.day),
-      0, AlarmProvider.showAlarmNotification,
-      alarmClock: true,exact: true,wakeup: true,
-    )
-    .then((value) => Navigator.pop(context));
+    print("${provider.hour}:${provider.minute}");
   }
 
   @override
@@ -116,13 +104,12 @@ class _AddAlarmState extends State<AddAlarm>
             decoration: BoxDecoration
             (
               color: AppStyles.cardColor,
-              borderRadius: BorderRadius.circular(20)
+              borderRadius: BorderRadius.circular(24)
             ),
             child: Column(children:
             [
               SizedBox(height: 24.h),
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children:
               [
                 Text("4 GÜN",style: AppStyles.subTxtStyle),
                 IconButton(onPressed: (){}, icon: Icon(Icons.calendar_month_outlined,color: AppStyles.softWhite))
@@ -134,16 +121,8 @@ class _AddAlarmState extends State<AddAlarm>
           Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children:
           [
-            _txtButton(()
-            {
-              Navigator.pop(context);
-            },
-            "İptal et"),
-            _txtButton(()
-            {
-              //_setAlarm();
-            },
-            "Oluştur"),
+            _txtButton(() => Navigator.pop(context), "İptal et"),
+            _txtButton(() => _setAlarm(), "Oluştur"),
           ]),
         ],
       ),

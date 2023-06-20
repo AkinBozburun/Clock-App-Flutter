@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:my_clock_app/core/box%20models/alarm_model.dart';
 import 'package:my_clock_app/core/box%20models/country_model.dart';
 import 'package:my_clock_app/core/notification/notification_service.dart';
 import 'package:my_clock_app/core/providers.dart';
@@ -29,6 +30,7 @@ void main() async
   await NotificationService.initializeNotification();
   await AndroidAlarmManager.initialize();
   Hive.registerAdapter(CountryAdapter());
+  Hive.registerAdapter(AlarmAdapter());
   runApp(const MyApp());
 }
 
