@@ -5,17 +5,19 @@ import 'package:my_clock_app/core/providers.dart';
 import 'package:my_clock_app/styles/app_style.dart';
 import 'package:provider/provider.dart';
 
-Widget alarmCard(alarmName,hours,minutes,context)
+Widget alarmCard(int index,alarmName,hours,minutes,context)
 {
   final provider = Provider.of<AlarmProvider>(context);
-
+  final radius = BorderRadius.circular(20);
   bool switchValue = true;
+
   return Padding
   (
     padding: const EdgeInsets.only(left: 12,right: 12,bottom: 12),
     child: InkWell
     (
-      onTap: (){},
+      borderRadius: radius,
+      onLongPress: () => provider.deleteItemInBox(provider.alarmBoxList[index].alarmName),
       child: Ink
       (
         height: 180,
@@ -24,7 +26,7 @@ Widget alarmCard(alarmName,hours,minutes,context)
         decoration: BoxDecoration
         (
           color: AppStyles.cardColor,
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: radius,
         ),
         child: Column
         (

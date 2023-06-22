@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:my_clock_app/core/box%20models/boxes.dart';
 import 'package:my_clock_app/core/providers.dart';
 import 'package:my_clock_app/styles/app_style.dart';
 import 'package:my_clock_app/widgets/alarm/add_alarm.dart';
@@ -25,13 +26,17 @@ class _AlarmPageState extends State<AlarmPage>
     final provider = Provider.of<AlarmProvider>(context);
     if(Hive.isBoxOpen("Alarm"))
     {
-      return provider.alarmBoxList.isEmpty ? const EmptyMessage(txt: "Liste boş") :
+      return provider.alarmBoxList.isEmpty ? const EmptyMessage(txt: "Alarm yok") :
       ListView.builder
       (
         itemCount: provider.alarmBoxList.length,
         itemBuilder: (context, index) => alarmCard
         (
-          provider.alarmBoxList[index].alarmName,hours, minutes,context
+          index,
+          provider.alarmBoxList[index].alarmName,
+          provider.alarmBoxList[index].hour,
+          provider.alarmBoxList[index].minute,
+          context
         ),
       );
     }
@@ -46,10 +51,20 @@ class _AlarmPageState extends State<AlarmPage>
   }
 
   @override
+  void dispose()
+  {
+    if(Hive.isBoxOpen("Alarm"))
+    {
+      Boxes.getAlarmBox().close();
+    }
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context)
   {
-    final hours = time.hour.toString().padLeft(2,"0");
-    final minutes = time.minute.toString().padLeft(2,"0");
+    //final hours = time.hour.toString().padLeft(2,"0");
+    //final minutes = time.minute.toString().padLeft(2,"0");
 
     return Scaffold
     (
@@ -64,7 +79,7 @@ class _AlarmPageState extends State<AlarmPage>
           context, MaterialPageRoute(builder: (context) => const AddAlarm())),
         icon: const Icon(Icons.add))],
       ),
-      body:
+      body: _alarmList(),
     );
   }
 }

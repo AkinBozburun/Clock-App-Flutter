@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_clock_app/core/providers.dart';
 import 'package:my_clock_app/styles/app_style.dart';
-import 'package:my_clock_app/widgets/button.dart';
+import 'package:my_clock_app/widgets/buttons.dart';
 import 'package:my_clock_app/widgets/timer/timer_time_picker.dart';
 import 'package:my_clock_app/widgets/timer/timer_indicator.dart';
 import 'package:provider/provider.dart';

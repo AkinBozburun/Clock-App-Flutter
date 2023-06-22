@@ -23,3 +23,15 @@ Widget button(void Function() press, Color color, String txt)
     ),
   );
 }
+
+Widget txtButton(Function() press,String txt,TextStyle style) => InkWell
+(
+  onTap: press,
+  borderRadius: BorderRadius.circular(25),
+  child: Ink
+  (
+    height: 40,
+    width: ScreenUtil().screenWidth/3,
+    child: Center(child: Text(txt,style: style))
+  ),
+);

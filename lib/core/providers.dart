@@ -60,11 +60,11 @@ class AlarmProvider extends ChangeNotifier
     print("box listeye geçti");
   }
 
-  _listAlarmBox(alarmName,isActive,hour,minute)
+  listAlarmBox(alarmName,isActive,hour,minute)
   {
     final box = Boxes.getAlarmBox();
     var con = Alarm()
-    ..alarmName = alarmName ?? ""
+    ..alarmName = alarmName
     ..hour = hour
     ..minute = minute
     ..isActive = isActive

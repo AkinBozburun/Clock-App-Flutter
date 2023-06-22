@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_clock_app/core/providers.dart';
 import 'package:my_clock_app/styles/app_style.dart';
 import 'package:my_clock_app/widgets/alarm/alarm_time_picker.dart';
+import 'package:my_clock_app/widgets/buttons.dart';
 import 'package:provider/provider.dart';
 
 class AddAlarm extends StatefulWidget
@@ -16,17 +17,7 @@ class AddAlarm extends StatefulWidget
 
 class _AddAlarmState extends State<AddAlarm>
 {
-  Widget _txtButton(Function() press,txt) => InkWell
-  (
-    onTap: press,
-    borderRadius: BorderRadius.circular(25),
-    child: Ink
-    (
-      height: 40,
-      width: ScreenUtil().screenWidth/3,
-      child: Center(child: Text(txt,style: AppStyles.subTxtStyle))
-    ),
-  );
+  TextEditingController alarmNameController = TextEditingController();
 
   _dayPicker()
   {
@@ -70,18 +61,23 @@ class _AddAlarmState extends State<AddAlarm>
   _setAlarm()
   {
     final provider = Provider.of<AlarmProvider>(context,listen: false);
+    final time = DateTime.now();
 
-    //final time = DateTime.now();
-    //
-    //AndroidAlarmManager.oneShotAt
-    //(
-    //  provider.parseAlarm(time.year, time.month, time.day),
-    //  0, AlarmProvider.showAlarmNotification,
-    //  alarmClock: true,exact: true,wakeup: true,
-    //)
-    //.then((value) => Navigator.pop(context));
-
-    print("${provider.hour}:${provider.minute}");
+    if(alarmNameController.text != "")
+    {
+      provider.listAlarmBox(alarmNameController.text, true, provider.hour, provider.minute);
+      AndroidAlarmManager.oneShotAt
+      (
+        provider.parseAlarm(time.year, time.month, time.day),
+        0, AlarmProvider.showAlarmNotification,
+        alarmClock: true,exact: true,wakeup: true,
+      )
+      .then((value) => Navigator.pop(context));
+    }
+    else
+    {
+      print("alarm ismi vermelisiniz!");
+    }
   }
 
   @override
@@ -89,6 +85,7 @@ class _AddAlarmState extends State<AddAlarm>
   {
     return Scaffold
     (
+      resizeToAvoidBottomInset: false,
       body: Column
       (
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -115,14 +112,17 @@ class _AddAlarmState extends State<AddAlarm>
                 IconButton(onPressed: (){}, icon: Icon(Icons.calendar_month_outlined,color: AppStyles.softWhite))
               ]),
               _dayPicker(),
-              TextField(),
+              TextField
+              (
+                controller: alarmNameController,
+              ),
             ]),
           ),
           Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children:
           [
-            _txtButton(() => Navigator.pop(context), "İptal et"),
-            _txtButton(() => _setAlarm(), "Oluştur"),
+            txtButton(() => Navigator.pop(context), "İptal et",AppStyles.subTxtStyle),
+            txtButton(() => _setAlarm(), "Oluştur",AppStyles.subTxtStyle),
           ]),
         ],
       ),

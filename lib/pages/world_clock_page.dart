@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:my_clock_app/core/box%20models/country_model.dart';
+import 'package:my_clock_app/core/box%20models/boxes.dart';
 import 'package:my_clock_app/styles/app_style.dart';
 import 'package:my_clock_app/widgets/world%20clock/city_list.dart';
 import 'package:my_clock_app/widgets/world%20clock/clock_stream.dart';
@@ -19,7 +18,7 @@ class _WorldClockPageState extends State<WorldClockPage>
   @override
   void dispose()
   {
-    Hive.box<Country>("country").close();
+    Boxes.getCountryBox().close();
     super.dispose();
   }
 

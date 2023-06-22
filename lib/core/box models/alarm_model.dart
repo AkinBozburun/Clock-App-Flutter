@@ -6,13 +6,13 @@ part 'alarm_model.g.dart';
 class Alarm
 {
   @HiveField(0)
-  late String? alarmName;
+  late String alarmName;
 
   @HiveField(1)
-  late String hour;
+  late int hour;
 
   @HiveField(2)
-  late String minute;
+  late int minute;
 
   @HiveField(3)
   late bool isActive;

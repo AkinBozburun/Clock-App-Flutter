@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_clock_app/core/providers.dart';
 import 'package:my_clock_app/styles/app_style.dart';
-import 'package:my_clock_app/widgets/button.dart';
+import 'package:my_clock_app/widgets/buttons.dart';
 import 'package:my_clock_app/widgets/stopwatch/lap_times.dart';
 import 'package:my_clock_app/widgets/stopwatch/stop_watch.dart';
 import 'package:provider/provider.dart';
