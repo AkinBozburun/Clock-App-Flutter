@@ -18,8 +18,8 @@ class AlarmAdapter extends TypeAdapter<Alarm> {
     };
     return Alarm()
       ..alarmName = fields[0] as String
-      ..hour = fields[1] as int
-      ..minute = fields[2] as int
+      ..hour = fields[1] as String
+      ..minute = fields[2] as String
       ..isActive = fields[3] as bool
       ..days = (fields[4] as List)
           .map((dynamic e) => (e as Map).cast<dynamic, dynamic>())

@@ -18,15 +18,13 @@ class AlarmPage extends StatefulWidget
 
 class _AlarmPageState extends State<AlarmPage>
 {
-  String alarmName = "Toplantı";
-  TimeOfDay time = const TimeOfDay(hour: 1, minute: 5);
-
   _alarmList()
   {
     final provider = Provider.of<AlarmProvider>(context);
     if(Hive.isBoxOpen("Alarm"))
     {
-      return provider.alarmBoxList.isEmpty ? const EmptyMessage(txt: "Alarm yok") :
+      return provider.alarmBoxList.isEmpty ?
+      const EmptyMessage(txt: "Alarm yok") :
       ListView.builder
       (
         itemCount: provider.alarmBoxList.length,

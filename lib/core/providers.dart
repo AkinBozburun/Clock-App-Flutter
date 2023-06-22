@@ -62,11 +62,14 @@ class AlarmProvider extends ChangeNotifier
 
   listAlarmBox(alarmName,isActive,hour,minute)
   {
+    String h = hour < 10 ? "0$hour" : hour.toString();
+    String m = minute < 10 ? "0$minute" : minute.toString();
+
     final box = Boxes.getAlarmBox();
     var con = Alarm()
     ..alarmName = alarmName
-    ..hour = hour
-    ..minute = minute
+    ..hour = h
+    ..minute = m
     ..isActive = isActive
     ..days = days;
 

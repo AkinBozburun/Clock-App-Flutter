@@ -9,10 +9,10 @@ class Alarm
   late String alarmName;
 
   @HiveField(1)
-  late int hour;
+  late String hour;
 
   @HiveField(2)
-  late int minute;
+  late String minute;
 
   @HiveField(3)
   late bool isActive;
